@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(({ command }) => {
   return {
-    base: command === 'build' ? '/CV.io/' : '/',
+    base: command === 'build' ? '/CV/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

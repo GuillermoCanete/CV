@@ -26,7 +26,6 @@ import {
   SKILLS, 
   ACHIEVEMENTS, 
   EXPERIENCES, 
-  EARLY_WORKS, 
   PROJECTS, 
   CERTS, 
   ARTICLES, 
@@ -37,6 +36,40 @@ import {
 import guillermoPhoto from "./assets/images/Guille.png";
 // @ts-ignore
 import pcbBoard from "./assets/images/PCB.jpeg";
+// @ts-ignore
+import spacexPhoto from "./assets/images/spacex.png";
+
+// Inline SVG flag components to render correctly on all operating systems/browsers (including Windows Chrome)
+function FlagAR() {
+  return (
+    <svg className="w-4.5 h-3 rounded-sm shadow-[0_0_1px_rgba(0,0,0,0.5)] inline-block flex-shrink-0" viewBox="0 0 9 6" style={{ verticalAlign: 'middle' }}>
+      <rect fill="#74acdf" width="9" height="6"/>
+      <rect fill="#fff" y="2" width="9" height="2"/>
+      <circle fill="#f6b40e" cx="4.5" cy="3" r="0.6"/>
+    </svg>
+  );
+}
+
+function FlagUS() {
+  return (
+    <svg className="w-4.5 h-3 rounded-sm shadow-[0_0_1px_rgba(0,0,0,0.5)] inline-block flex-shrink-0" viewBox="0 0 30 20" style={{ verticalAlign: 'middle' }}>
+      <rect width="30" height="20" fill="#b22234"/>
+      <path d="M0,1.54h30M0,4.62h30M0,7.69h30M0,10.77h30M0,13.85h30M0,16.92h30" stroke="#fff" stroke-width="1.54"/>
+      <rect width="12" height="10.77" fill="#3c3b6e"/>
+    </svg>
+  );
+}
+
+function FlagBR() {
+  return (
+    <svg className="w-4.5 h-3 rounded-sm shadow-[0_0_1px_rgba(0,0,0,0.5)] inline-block flex-shrink-0" viewBox="0 0 10 7" style={{ verticalAlign: 'middle' }}>
+      <rect fill="#009c3b" width="10" height="7"/>
+      <path fill="#ffdf00" d="M5,0.7L9.3,3.5L5,6.3L0.7,3.5Z"/>
+      <circle fill="#0021ad" cx="5" cy="3.5" r="1.2"/>
+    </svg>
+  );
+}
+
 
 interface AnimatedCounterProps {
   value: string;
@@ -117,13 +150,39 @@ function AnimatedCounter({ value }: AnimatedCounterProps) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState<"es" | "en">(() => {
+  const detectDefaultLanguage = (): "es" | "en" | "pt" => {
+    // 1. Check URL query parameters (highest priority for SEO/sharing)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get("lang");
+      if (urlLang === "es" || urlLang === "en" || urlLang === "pt") return urlLang;
+    } catch (e) {}
+
+    // 2. Check local storage
     const saved = localStorage.getItem("gc-lang");
-    return (saved === "es" || saved === "en") ? saved : "es";
-  });
+    if (saved === "es" || saved === "en" || saved === "pt") return saved;
+
+    // 3. Try to detect by browser language
+    const browserLang = navigator.language || (navigator.languages && navigator.languages[0]) || "";
+    if (browserLang.toLowerCase().startsWith("pt")) return "pt";
+    if (browserLang.toLowerCase().startsWith("es")) return "es";
+
+    // 4. Try to detect by timezone
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      const lowerTz = tz.toLowerCase();
+      if (lowerTz.includes("sao_paulo") || lowerTz.includes("brazil") || lowerTz.includes("rio_de_janeiro") || lowerTz.includes("recife") || lowerTz.includes("fortaleza") || lowerTz.includes("porto_alegre")) {
+        return "pt";
+      }
+    } catch (e) {}
+
+    return "en"; // Default fallback
+  };
+
+  const [lang, setLang] = useState<"es" | "en" | "pt">(detectDefaultLanguage);
 
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
-  const [modalLang, setModalLang] = useState<"es" | "en">("es");
+  const [modalLang, setModalLang] = useState<"es" | "en" | "pt">("es");
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
   // PCB Defect Recorder Simulator States
@@ -156,8 +215,15 @@ export default function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const handleLangSwitch = (target: "es" | "en") => {
+  const handleLangSwitch = (target: "es" | "en" | "pt") => {
     setLang(target);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", target);
+      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+    } catch (e) {
+      console.error("Error updating URL lang parameter:", e);
+    }
   };
 
   const scrollToSection = (id: string) => {
@@ -210,7 +276,7 @@ export default function App() {
               onClick={() => scrollToSection("about")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Sobre mí" : "About"}
+              {lang === "es" ? "Sobre mí" : lang === "pt" ? "Sobre mim" : "About"}
             </button>
           </li>
           <li>
@@ -218,7 +284,7 @@ export default function App() {
               onClick={() => scrollToSection("experience")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Experiencia" : "Experience"}
+              {lang === "es" ? "Experiencia" : lang === "pt" ? "Experiência" : "Experience"}
             </button>
           </li>
           <li>
@@ -226,7 +292,7 @@ export default function App() {
               onClick={() => scrollToSection("achievements")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Resultados" : "Results"}
+              {lang === "es" ? "Resultados" : lang === "pt" ? "Resultados" : "Results"}
             </button>
           </li>
           <li>
@@ -234,7 +300,7 @@ export default function App() {
               onClick={() => scrollToSection("projects")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Proyectos" : "Projects"}
+              {lang === "es" ? "Proyectos" : lang === "pt" ? "Projetos" : "Projects"}
             </button>
           </li>
           <li>
@@ -242,7 +308,7 @@ export default function App() {
               onClick={() => scrollToSection("writing")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Artículos" : "Articles"}
+              {lang === "es" ? "Artículos" : lang === "pt" ? "Artigos" : "Articles"}
             </button>
           </li>
           <li>
@@ -250,7 +316,7 @@ export default function App() {
               onClick={() => scrollToSection("contact")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
-              {lang === "es" ? "Contacto" : "Contact"}
+              {lang === "es" ? "Contacto" : lang === "pt" ? "Contato" : "Contact"}
             </button>
           </li>
         </ul>
@@ -260,17 +326,24 @@ export default function App() {
           <div className="flex gap-1.5 border border-cv-line rounded p-1 bg-cv-bg2/40">
             <button 
               onClick={() => handleLangSwitch("es")}
-              className={`text-base px-2 py-0.5 rounded cursor-pointer transition-all ${lang === "es" ? "bg-cv-accent text-cv-white font-medium scale-105" : "opacity-60 hover:opacity-100"}`}
+              className={`text-xs px-2.5 py-1 rounded cursor-pointer transition-all flex items-center gap-1.5 ${lang === "es" ? "bg-cv-accent text-cv-white font-medium scale-105" : "opacity-60 hover:opacity-100"}`}
               title="Español (Argentina)"
             >
-              🇦🇷 es
+              <FlagAR /> es
             </button>
             <button 
               onClick={() => handleLangSwitch("en")}
-              className={`text-base px-2 py-0.5 rounded cursor-pointer transition-all ${lang === "en" ? "bg-cv-accent text-cv-white font-medium scale-105" : "opacity-60 hover:opacity-100"}`}
+              className={`text-xs px-2.5 py-1 rounded cursor-pointer transition-all flex items-center gap-1.5 ${lang === "en" ? "bg-cv-accent text-cv-white font-medium scale-105" : "opacity-60 hover:opacity-100"}`}
               title="English (US)"
             >
-              🇺🇸 en
+              <FlagUS /> en
+            </button>
+            <button 
+              onClick={() => handleLangSwitch("pt")}
+              className={`text-xs px-2.5 py-1 rounded cursor-pointer transition-all flex items-center gap-1.5 ${lang === "pt" ? "bg-cv-accent text-cv-white font-medium scale-105" : "opacity-60 hover:opacity-100"}`}
+              title="Português (Brasil)"
+            >
+              <FlagBR /> pt
             </button>
           </div>
         </div>
@@ -287,7 +360,7 @@ export default function App() {
             <div 
               onClick={() => setIsPhotoModalOpen(true)}
               className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-cv-accent2 flex-shrink-0 bg-cv-black shadow-lg cursor-zoom-in hover:scale-105 active:scale-95 transition-transform duration-300 group/avatar"
-              title={lang === "es" ? "Ampliar foto de perfil" : "Expand profile picture"}
+              title={lang === "es" ? "Ampliar foto de perfil" : lang === "pt" ? "Ampliar foto de perfil" : "Expand profile picture"}
             >
               <img 
                 src={guillermoPhoto} 
@@ -300,7 +373,7 @@ export default function App() {
 
             <div className="flex-1">
               <span className="inline-block font-mono text-[10px] sm:text-xs tracking-widest uppercase text-cv-accent border border-cv-accent px-2.5 py-1 rounded mb-3">
-                {lang === "es" ? "Abierto a nuevas oportunidades" : "Open to new opportunities"}
+                {lang === "es" ? "Abierto a nuevas oportunidades" : lang === "pt" ? "Aberto a novas oportunidades" : "Open to new opportunities"}
               </span>
               <h1 className="font-serif text-4xl sm:text-6xl tracking-tight leading-none text-cv-ink">
                 Guillermo <br />
@@ -312,11 +385,24 @@ export default function App() {
           <p className="text-base sm:text-lg text-cv-ink2 max-w-xl mb-8 leading-relaxed">
             {lang === "es" ? (
               <>
-                Especialista en <strong>Gestión de Calidad e Ingeniería de Procesos</strong> con 14+ años convirtiendo problemas operativos en resultados medibles para marcas globales como <strong>Motorola, Samsung, Huawei, Sony y Alcatel</strong>.
+                <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
+                  Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
+                </span>
+                Profesional en <strong>Excelencia Operacional e Ingeniería de Procesos</strong> con 14+ años identificando lo que otros aceptaron como inevitable y convirtiéndolo en resultados medibles. Experiencia probada en manufactura electrónica de alta exigencia para <strong>Motorola, Samsung, Huawei, Sony y Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Diseña procesos, implementa mejora continua y construye herramientas digitales propias aplicando IA. Disponible para relocalización nacional e internacional.
+              </>
+            ) : lang === "pt" ? (
+              <>
+                <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
+                  Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
+                </span>
+                Profissional em <strong>Excelência Operacional e Engenharia de Processos</strong> com 14+ anos identificando o que outros aceitaram como inevitável e convertendo-o em resultados mensuráveis. Experiência comprovada em manufatura eletrônica de alta exigência para <strong>Motorola, Samsung, Huawei, Sony e Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Projeta processos, implementa melhoria contínua e constrói ferramentas digitais próprias aplicando IA. Disponível para relocação nacional e internacional.
               </>
             ) : (
               <>
-                <strong>Quality Management &amp; Process Engineering</strong> specialist with over 14 years turning complex operational problems into measurable ROI for leading brands like <strong>Motorola, Samsung, Huawei, Sony, and Alcatel</strong>.
+                <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
+                  Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
+                </span>
+                Professional in <strong>Operational Excellence &amp; Process Engineering</strong> with over 14 years identifying what others accepted as inevitable and turning it into measurable results. Proven experience in high-demand electronics manufacturing for <strong>Motorola, Samsung, Huawei, Sony, and Alcatel</strong>. Certified Auditor for <strong>ISO 9001 · 14001 · 45001</strong>. Designs processes, implements continuous improvement, and builds proprietary digital tools applying AI. Available for national and international relocation.
               </>
             )}
           </p>
@@ -326,13 +412,13 @@ export default function App() {
               onClick={() => scrollToSection("contact")}
               className="px-6 py-3 bg-cv-ink text-cv-bg text-xs font-bold tracking-wider uppercase rounded-sm hover:bg-cv-accent hover:text-cv-white transition-all cursor-pointer shadow-sm active:scale-95"
             >
-              {lang === "es" ? "Hablemos" : "Let's talk"}
+              {lang === "es" ? "Hablemos" : lang === "pt" ? "Fale comigo" : "Let's talk"}
             </button>
             <a 
               href="https://linkedin.com/in/guillermo-canete" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-cv-ink text-cv-ink text-xs font-bold tracking-wider uppercase rounded-sm hover:bg-cv-ink hover:text-cv-bg transition-all inline-flex items-center gap-2"
+              className="px-6 py-3 border border-cv-ink text-cv-ink text-xs font-bold tracking-wider uppercase rounded-sm hover:bg-cv-ink hover:text-cv-bg transition-all inline-flex items-center gap-2" title={lang === "pt" ? "Disposição para relocalização no Brasil" : ""}
             >
               LinkedIn <ArrowUpRight className="w-4 h-4" />
             </a>
@@ -347,10 +433,10 @@ export default function App() {
                 <AnimatedCounter value={stat.number} />
               </div>
               <div className="text-sm font-semibold text-cv-ink leading-tight mb-1">
-                {lang === "es" ? stat.label.es : stat.label.en}
+                {lang === "es" ? stat.label.es : lang === "pt" ? stat.label.pt : stat.label.en}
               </div>
               <div className="text-xs text-cv-ink3">
-                {lang === "es" ? stat.sub.es : stat.sub.en}
+                {lang === "es" ? stat.sub.es : lang === "pt" ? stat.sub.pt : stat.sub.en}
               </div>
             </div>
           ))}
@@ -362,7 +448,7 @@ export default function App() {
         <div className="flex items-center gap-4 mb-12 border-b border-cv-line pb-4">
           <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">01</span>
           <h2 className="font-serif text-3xl sm:text-4xl text-cv-ink">
-            {lang === "es" ? "Sobre mí" : "About me"}
+            {lang === "es" ? "Sobre mí" : lang === "pt" ? "Sobre mim" : "About me"}
           </h2>
         </div>
 
@@ -371,25 +457,37 @@ export default function App() {
             {lang === "es" ? (
               <>
                 <p>
-                  No gestiono la calidad desde lejos — la ingeniero desde adentro. Con más de 14 años en <strong>Grupo BGH</strong> entregando resultados para clientes globales, construí mi carrera sobre un principio fundamental: <strong>encontrar la causa raíz, corregirla definitivamente y medir todo.</strong>
+                  No gestiono la calidad desde lejos — la diseño desde el corazón del proceso. Con más de 14 años en <strong>Grupo BGH</strong> entregando resultados para clientes globales, construí mi carrera sobre un principio fundamental: <strong>encontrar la causa raíz, resolver de forma definitiva y medir todo para optimizar.</strong>
                 </p>
                 <p>
                   Combino metodologías tradicionales de excelencia industrial (<strong>APQP, PFMEA, CAPA, Core Tools</strong>) con la integración práctica de herramientas de IA para lograr diagnósticos veloces y flujos de trabajo más inteligentes.
                 </p>
                 <p>
-                  Me especializo en diseñar e implementar sistemas de gestión de calidad robustos, liderar auditorías internas/externas y optimizar procesos de manufactura complejos bajo estándares internacionales de excelencia operativa.
+                  Planifico y realizo auditorías integradas, aseguro el cumplimiento regulatorio estricto con clientes globales y diseño flujos de producción optimizados.
+                </p>
+              </>
+            ) : lang === "pt" ? (
+              <>
+                <p>
+                  Não gerencio a qualidade à distância — eu a projeto a partir do coração do processo. Com mais de 14 anos na <strong>Grupo BGH</strong> entregando resultados para marcas globais, consolidei minha carreira sobre um princípio fundamental: <strong>encontrar a causa raiz, resolver de forma definitiva e medir cada métrica para otimizar os resultados.</strong>
+                </p>
+                <p>
+                  Combino metodologias tradicionais de excelência industrial (<strong>APQP, PFMEA, CAPA, Core Tools</strong>) com a integração prática de ferramentas de IA para alcançar diagnósticos mais rápidos e fluxos de trabalho mais inteligentes.
+                </p>
+                <p>
+                  Planejo e realizo auditorias integradas, asseguro o estrito cumprimento regulatório com clientes globais e desenho fluxos de produção otimizados.
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  I don't manage quality from a distant desk — I engineer it from within. With 14+ years at <strong>Grupo BGH</strong> delivering products for global brands, I built my career on a simple premise: <strong>isolate the root cause, fix it permanently, and track the data.</strong>
+                  I don't manage quality from a distant desk — I design it from within. With 14+ years at <strong>Grupo BGH</strong> delivering products for global brands, I built my career on a simple premise: <strong>isolate the root cause, resolve permanently, and track key metrics to optimize.</strong>
                 </p>
                 <p>
                   I fuse traditional manufacturing excellence (<strong>APQP, PFMEA, CAPA, Core Tools</strong>) with modern AI tools to expedite analysis diagnostics and build smarter operational flows.
                 </p>
                 <p>
-                  I specialize in designing and implementing robust quality management systems, leading internal/external audits, and optimizing complex manufacturing processes under international standards of operational excellence.
+                  I plan and execute integrated audits, ensure strict regulatory compliance with global clients, and design optimized production flows.
                 </p>
               </>
             )}
@@ -400,7 +498,7 @@ export default function App() {
               <div key={skill.id} className="bg-cv-white border border-cv-line p-4 rounded flex items-center justify-between shadow-sm hover:border-cv-accent transition-all duration-200 hover:-translate-y-0.5">
                 <span className="text-xs sm:text-sm font-semibold text-cv-ink">{skill.name}</span>
                 <span className="font-mono text-[10px] bg-cv-accent2/50 text-cv-accent px-2 py-0.5 rounded uppercase font-medium">
-                  {lang === "es" ? skill.tag.es : skill.tag.en}
+                  {skill.id === "s7" && lang !== "pt" ? (lang === "es" ? "Inicial" : "Beginner") : (lang === "es" ? skill.tag.es : lang === "pt" ? skill.tag.pt : skill.tag.en)}
                 </span>
               </div>
             ))}
@@ -414,7 +512,7 @@ export default function App() {
           <div className="flex items-center gap-4 mb-12 border-b border-cv-bg2/10 pb-4">
             <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">02</span>
             <h2 className="font-serif text-3xl sm:text-4xl text-cv-white">
-              {lang === "es" ? "Resultados comprobables" : "Results that matter"}
+              {lang === "es" ? "Resultados comprobables" : lang === "pt" ? "Resultados comprováveis" : "Results that matter"}
             </h2>
           </div>
 
@@ -434,7 +532,7 @@ export default function App() {
                     {ach.icon}
                   </div>
                   <p className="text-xs sm:text-sm text-cv-bg2 leading-relaxed opacity-90 pr-12">
-                    {lang === "es" ? ach.text.es : ach.text.en}
+                    {lang === "es" ? ach.text.es : lang === "pt" ? ach.text.pt : ach.text.en}
                   </p>
                 </div>
               </div>
@@ -448,7 +546,7 @@ export default function App() {
         <div className="flex items-center gap-4 mb-12 border-b border-cv-line pb-4">
           <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">03</span>
           <h2 className="font-serif text-3xl sm:text-4xl text-cv-ink">
-            {lang === "es" ? "Experiencia consolidada" : "Proven career path"}
+            {lang === "es" ? "Experiencia consolidada" : lang === "pt" ? "Experiência consolidada" : "Proven career path"}
           </h2>
         </div>
 
@@ -460,7 +558,7 @@ export default function App() {
             >
               <div className="lg:col-span-3">
                 <span className="font-mono text-xs text-cv-ink3 block mb-1">
-                  {lang === "es" ? exp.dates.es : exp.dates.en}
+                  {lang === "es" ? exp.dates.es : lang === "pt" ? exp.dates.pt : exp.dates.en}
                 </span>
                 <span className="text-sm font-bold text-cv-ink2 block">
                   {exp.company}
@@ -469,42 +567,20 @@ export default function App() {
               <div className="lg:col-span-9 flex flex-col justify-between">
                 <div>
                   <h3 className="font-serif text-xl text-cv-ink mb-2">
-                    {lang === "es" ? exp.role.es : exp.role.en}
+                    {lang === "es" ? exp.role.es : lang === "pt" ? exp.role.pt : exp.role.en}
                   </h3>
                   <p className="text-xs sm:text-sm text-cv-ink2 leading-relaxed">
-                    {lang === "es" ? exp.desc.es : exp.desc.en}
+                    <span dangerouslySetInnerHTML={{ __html: lang === "es" ? exp.desc.es : lang === "pt" ? exp.desc.pt : exp.desc.en }} />
                   </p>
                 </div>
                 {exp.highlight && (
                   <span className="mt-4 self-start font-mono text-[10px] bg-cv-accent text-cv-white px-2 py-0.5 rounded font-bold uppercase">
-                    {lang === "es" ? exp.highlight.es : exp.highlight.en}
+                    {lang === "es" ? exp.highlight.es : lang === "pt" ? exp.highlight.pt : exp.highlight.en}
                   </span>
                 )}
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Early career toggle */}
-        <div className="mt-12 bg-cv-bg2/40 border border-cv-line rounded p-6 sm:p-8">
-          <h3 className="font-mono text-xs sm:text-sm font-bold tracking-wider uppercase text-cv-ink2 mb-4">
-            {lang === "es" ? "Trayectoria previa y oficios" : "Prior background & skilled trades"}
-          </h3>
-          <div className="space-y-4">
-            {EARLY_WORKS.map((work, index) => (
-              <div key={index} className="flex gap-4 items-start text-xs sm:text-sm">
-                <span className="text-cv-accent font-bold mt-0.5">•</span>
-                <div>
-                  <strong className="text-cv-ink block">
-                    {lang === "es" ? work.role.es : work.role.en}
-                  </strong>
-                  <span className="text-cv-ink2 block mt-0.5">
-                    {lang === "es" ? work.desc.es : work.desc.en}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -514,13 +590,15 @@ export default function App() {
           <div className="flex items-center gap-4 mb-4 border-b border-cv-line pb-4">
             <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">04</span>
             <h2 className="font-serif text-3xl sm:text-4xl text-cv-ink">
-              {lang === "es" ? "Construido, no solo gestionado" : "Built, not just managed"}
+              {lang === "es" ? "Construido, no solo gestionado" : lang === "pt" ? "Construído, não apenas gerenciado" : "Built, not just managed"}
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-cv-ink2 max-w-xl mb-12 leading-relaxed">
             {lang === "es" ? 
-              "Diseño e implemento soluciones de calidad digitales personalizadas. Probá abajo los prototipos interactivos integrados:" : 
-              "I design and deploy real operational software utilities. Interact with the sandbox components below:"
+              "Implementación de aplicaciones web con IA y base de datos asociada para dar solución a problemas específicos en la industria. Diseño e implemento soluciones de calidad digitales personalizadas. Probá abajo los prototipos interactivos integrados:" : 
+             lang === "pt" ?
+              "Implementação de aplicações web com IA e banco de dados associado para solucionar problemas específicos na indústria. Desenho e implemento soluções de qualidade digitais personalizadas. Teste abaixo os protótipos interativos integrados:" :
+              "Implementation of AI-powered web applications and associated databases to solve specific industrial problems. I design and deploy custom digital quality solutions. Interact with the sandbox components below:"
             }
           </p>
 
@@ -540,7 +618,7 @@ export default function App() {
               {/* Interactive Solder Area */}
               <div className="relative bg-[#111] p-4 flex flex-col items-center justify-center border-b border-cv-line select-none w-full">
                 <span className="font-mono text-[9px] text-[#8a857c] tracking-wider mb-2 text-center select-none uppercase">
-                  {lang === "es" ? "📦 CLICKEA EN EL PCB REAL PARA REGISTRAR DEFECTOS EN COORDENADAS" : "📦 CLICK DIRECTLY ON THE ACTUAL PCB TO LOG DEFECT DETAILS"}
+                  {lang === "es" ? "📦 CLICKEA EN EL PCB REAL PARA REGISTRAR DEFECTOS EN COORDENADAS" : lang === "pt" ? "📦 CLIQUE DIRETAMENTE NO PCB REAL PARA REGISTRAR DEFEITOS EM COORDENADAS" : "📦 CLICK DIRECTLY ON THE ACTUAL PCB TO LOG DEFECT DETAILS"}
                 </span>
                 
                 <div className="relative w-full max-w-sm aspect-video rounded overflow-hidden shadow-lg border border-emerald-500/20 group">
@@ -588,10 +666,10 @@ export default function App() {
                       onChange={(e) => setSelectedDefectType(e.target.value)}
                       className="bg-cv-black text-cv-white border border-cv-line text-[10px] px-2 py-0.5 rounded font-mono focus:outline-none focus:border-cv-accent"
                     >
-                      <option value="Solder Bridge">{lang === "es" ? "Puente de Soldadura" : "Solder Bridge"}</option>
-                      <option value="Missing Component">{lang === "es" ? "Componente Faltante" : "Missing Component"}</option>
-                      <option value="Polarity Inversion">{lang === "es" ? "Inversión de Polaridad" : "Polarity Inversion"}</option>
-                      <option value="Solder Void">{lang === "es" ? "Falta de Soldadura" : "Solder Void"}</option>
+                      <option value="Solder Bridge">{lang === "es" ? "Puente de Soldadura" : lang === "pt" ? "Ponte de Solda" : "Solder Bridge"}</option>
+                      <option value="Missing Component">{lang === "es" ? "Componente Faltante" : lang === "pt" ? "Componente Faltante" : "Missing Component"}</option>
+                      <option value="Polarity Inversion">{lang === "es" ? "Inversión de Polaridad" : lang === "pt" ? "Inversão de Polaridade" : "Polarity Inversion"}</option>
+                      <option value="Solder Void">{lang === "es" ? "Falta de Soldadura" : lang === "pt" ? "Falta de Solda" : "Solder Void"}</option>
                     </select>
                   </div>
 
@@ -599,7 +677,7 @@ export default function App() {
                     onClick={clearSimulatedDefects}
                     className="font-mono text-[9px] bg-red-950/40 text-red-500 border border-red-500/30 px-2 py-0.5 rounded hover:bg-cv-accent hover:text-cv-white hover:border-cv-accent transition-colors cursor-pointer"
                   >
-                    {lang === "es" ? "LIMPIAR INDICE" : "CLEAR LEDGER"} ({simulatedDefects.length})
+                    {lang === "es" ? "LIMPIAR INDICE" : lang === "pt" ? "LIMPAR REGISTRO" : "CLEAR LEDGER"} ({simulatedDefects.length})
                   </button>
                 </div>
 
@@ -607,7 +685,7 @@ export default function App() {
                 {simulatedDefects.length > 0 && (
                   <div className="w-full max-w-sm mt-3 bg-cv-black border border-cv-line rounded p-2 max-h-24 overflow-y-auto font-mono text-[9px] text-cv-ink2 space-y-1">
                     <div className="text-[#8a857c] border-b border-cv-line pb-1 mb-1 font-bold">
-                      {lang === "es" ? "REGISTRO DE FALLAS TIEMPO REAL:" : "REAL-TIME DEFECT REGISTRATION LOG:"}
+                      {lang === "es" ? "REGISTRO DE FALLAS TIEMPO REAL:" : lang === "pt" ? "REGISTRO DE FALHAS EM TEMPO REAL:" : "REAL-TIME DEFECT REGISTRATION LOG:"}
                     </div>
                     {simulatedDefects.map((def, idx) => (
                       <div key={def.id} className="flex justify-between items-center bg-cv-bg2/5 px-1.5 py-0.5 rounded border border-cv-line/10">
@@ -622,18 +700,18 @@ export default function App() {
               {/* Project Body details */}
               <div className="p-6">
                 <div className="font-mono text-[10px] tracking-wider uppercase text-cv-accent mb-2">
-                  {lang === "es" ? PROJECTS[0].tag.es : PROJECTS[0].tag.en}
+                  {lang === "es" ? PROJECTS[0].tag.es : lang === "pt" ? PROJECTS[0].tag.pt : PROJECTS[0].tag.en}
                 </div>
                 <h3 className="font-serif text-2xl mb-3">{PROJECTS[0].title}</h3>
                 <p className="text-xs sm:text-sm text-cv-ink2 leading-relaxed mb-6">
-                  {lang === "es" ? PROJECTS[0].desc.es : PROJECTS[0].desc.en}
+                  {lang === "es" ? PROJECTS[0].desc.es : lang === "pt" ? PROJECTS[0].desc.pt : PROJECTS[0].desc.en}
                 </p>
 
                 <div className="space-y-2 mb-6 text-xs text-cv-ink2">
                   {PROJECTS[0].features.map((feat, index) => (
                     <div key={index} className="flex gap-2.5 items-start">
                       <span className="text-cv-accent font-bold">→</span>
-                      <span>{lang === "es" ? feat.es : feat.en}</span>
+                      <span>{lang === "es" ? feat.es : lang === "pt" ? feat.pt : feat.en}</span>
                     </div>
                   ))}
                 </div>
@@ -644,7 +722,7 @@ export default function App() {
                   rel="noopener noreferrer"
                   className="px-5 py-2.5 bg-cv-accent text-cv-white text-xs font-bold uppercase tracking-wider rounded inline-flex items-center gap-2 hover:bg-cv-ink hover:-translate-y-0.5 transition-all w-fit active:translate-y-0"
                 >
-                  {lang === "es" ? "Probar en vivo" : "Try the Live App"} <ArrowUpRight className="w-4 h-4" />
+                  {lang === "es" ? "Probar en vivo" : lang === "pt" ? "Testar ao vivo" : "Try the Live App"} <ArrowUpRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -663,7 +741,7 @@ export default function App() {
               {/* Interactive Dashboard Area */}
               <div className="relative bg-[#1a2218] p-6 flex flex-col gap-4 border-b border-cv-line select-none">
                 <span className="font-mono text-[9px] text-[#6a8a6a] tracking-wider block">
-                  {lang === "es" ? "SIMULAR PORCENTAJES EN VIVO" : "CLIK SLIDERS TO ADJUST COMPLIANCE METRICS"}
+                  {lang === "es" ? "SIMULAR PORCENTAJES EN VIVO" : lang === "pt" ? "SIMULAR PORCENTAGENS AO VIVO" : "CLIK SLIDERS TO ADJUST COMPLIANCE METRICS"}
                 </span>
 
                 {/* Vertical compliance sliders */}
@@ -698,24 +776,24 @@ export default function App() {
               {/* Project description body */}
               <div className="p-6">
                 <div className="font-mono text-[10px] tracking-wider uppercase text-cv-accent mb-2">
-                  {lang === "es" ? PROJECTS[1].tag.es : PROJECTS[1].tag.en}
+                  {lang === "es" ? PROJECTS[1].tag.es : lang === "pt" ? PROJECTS[1].tag.pt : PROJECTS[1].tag.en}
                 </div>
                 <h3 className="font-serif text-2xl mb-3">{PROJECTS[1].title}</h3>
                 <p className="text-xs sm:text-sm text-cv-ink2 leading-relaxed mb-6">
-                  {lang === "es" ? PROJECTS[1].desc.es : PROJECTS[1].desc.en}
+                  {lang === "es" ? PROJECTS[1].desc.es : lang === "pt" ? PROJECTS[1].desc.pt : PROJECTS[1].desc.en}
                 </p>
 
                 <div className="space-y-2 mb-6 text-xs text-cv-ink2">
                   {PROJECTS[1].features.map((feat, index) => (
                     <div key={index} className="flex gap-2.5 items-start">
                       <span className="text-cv-accent font-bold">→</span>
-                      <span>{lang === "es" ? feat.es : feat.en}</span>
+                      <span>{lang === "es" ? feat.es : lang === "pt" ? feat.pt : feat.en}</span>
                     </div>
                   ))}
                 </div>
 
                 <span className="px-5 py-2.5 border border-cv-line text-cv-ink3 bg-cv-bg2 text-xs font-bold uppercase tracking-wider rounded select-none">
-                  {lang === "es" ? "En desarrollo activo" : "Active Development"}
+                  {lang === "es" ? "En desarrollo activo" : lang === "pt" ? "Em desenvolvimento ativo" : "Active Development"}
                 </span>
               </div>
             </div>
@@ -729,7 +807,7 @@ export default function App() {
         <div className="flex items-center gap-4 mb-12 border-b border-cv-line pb-4">
           <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">05</span>
           <h2 className="font-serif text-3xl sm:text-4xl text-cv-ink">
-            {lang === "es" ? "Certificaciones" : "Specialist Certifications"}
+            {lang === "es" ? "Certificaciones" : lang === "pt" ? "Certificações" : "Specialist Certifications"}
           </h2>
         </div>
 
@@ -738,10 +816,10 @@ export default function App() {
             <div key={index} className="bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300">
               <div className="text-2xl mb-3">{cert.icon}</div>
               <h4 className="text-sm font-bold text-cv-ink mb-1">
-                {lang === "es" ? cert.name.es : cert.name.en}
+                {lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
               </h4>
               <p className="font-mono text-[11px] text-cv-ink3 uppercase">
-                {lang === "es" ? cert.org.es : cert.org.en}
+                {lang === "es" ? cert.org.es : lang === "pt" ? cert.org.pt : cert.org.en}
               </p>
             </div>
           ))}
@@ -753,7 +831,7 @@ export default function App() {
         <div className="flex items-center gap-4 mb-12 border-b border-cv-line pb-4">
           <span className="font-mono text-xs sm:text-sm text-cv-accent font-semibold">06</span>
           <h2 className="font-serif text-3xl sm:text-4xl text-cv-ink">
-            {lang === "es" ? "Ideas en voz alta" : "Thinking out loud"}
+            {lang === "es" ? "Ideas en voz alta" : lang === "pt" ? "Idéias em voz alta" : "Thinking out loud"}
           </h2>
         </div>
 
@@ -767,19 +845,19 @@ export default function App() {
             >
               <div>
                 <span className="font-mono text-[10px] sm:text-xs tracking-wider uppercase text-cv-accent block mb-3">
-                  {lang === "es" ? article.category.es : article.category.en}
+                  {lang === "es" ? article.category.es : lang === "pt" ? article.category.pt : article.category.en}
                 </span>
                 <h3 className="font-serif text-xl sm:text-2xl text-cv-ink mb-4 group-hover:text-cv-accent transition-colors line-clamp-2">
-                  {lang === "es" ? article.title.es : article.title.en}
+                  {lang === "es" ? article.title.es : lang === "pt" ? article.title.pt : article.title.en}
                 </h3>
                 <p className="text-xs sm:text-sm text-cv-ink2 leading-relaxed mb-6 line-clamp-3">
-                  {lang === "es" ? article.excerpt.es : article.excerpt.en}
+                  {lang === "es" ? article.excerpt.es : lang === "pt" ? article.excerpt.pt : article.excerpt.en}
                 </p>
               </div>
 
               <div className="flex items-center justify-between border-t border-cv-line/45 pt-4 mt-auto">
                 <span className="font-sans text-xs font-bold uppercase tracking-wider text-cv-ink group-hover:text-cv-accent transition-colors inline-flex items-center gap-1.5">
-                  {lang === "es" ? "Leer artículo" : "Read article"} <ChevronRight className="w-4 h-4" />
+                  {lang === "es" ? "Leer artículo" : lang === "pt" ? "Ler artigo" : "Read article"} <ChevronRight className="w-4 h-4" />
                 </span>
                 <div className="flex gap-1 text-[10px] font-mono font-medium text-cv-ink3">
                   <span className="border border-cv-line px-1.5 py-0.5 rounded">ES</span>
@@ -794,11 +872,13 @@ export default function App() {
             <div className="pt-2">
               <span className="text-3xl mb-4 block">✍️</span>
               <h3 className="font-serif text-xl text-cv-ink mb-2">
-                {lang === "es" ? "Más artículos en camino" : "More articles on the horizon"}
+                {lang === "es" ? "Más artículos en camino" : lang === "pt" ? "Mais artigos a caminho" : "More articles on the horizon"}
               </h3>
               <p className="text-xs sm:text-sm text-cv-ink3 leading-relaxed">
                 {lang === "es" ? 
                   "Reflexiones constantes sobre programas CAPA, auditorías eficaces, IA aplicada en la gestión de calidad y la evolución industrial." : 
+                 lang === "pt" ?
+                  "Reflexões constantes sobre programas CAPA, auditorias eficazes, IA aplicada na gestão de qualidade e a evolução industrial." :
                   "Ongoing reflections on modern CAPA design, meaningful audits, AI in operations, and the future of industrial governance."}
               </p>
             </div>
@@ -809,7 +889,7 @@ export default function App() {
               rel="noopener noreferrer"
               className="font-mono text-xs font-bold text-cv-accent hover:underline flex items-center gap-1 mt-6"
             >
-              {lang === "es" ? "Seguime en LinkedIn" : "Connect on LinkedIn"} →
+              {lang === "es" ? "Seguime en LinkedIn" : lang === "pt" ? "Conectar no LinkedIn" : "Connect on LinkedIn"} →
             </a>
           </div>
 
@@ -825,9 +905,14 @@ export default function App() {
                 Construyamos algo <br />
                 <span className="italic text-cv-accent font-normal">que realmente funcione</span>
               </>
+            ) : lang === "pt" ? (
+              <>
+                Construamos algo <br />
+                <span className="italic text-cv-accent font-normal">que realmente funcione</span>
+              </>
             ) : (
               <>
-                Let's engineer systems <br />
+                Let's build systems <br />
                 <span className="italic text-cv-accent font-normal">that actually deliver</span>
               </>
             )}
@@ -835,8 +920,10 @@ export default function App() {
           
           <p className="text-sm sm:text-base text-cv-bg2/80 max-w-xl mx-auto mb-12 leading-relaxed">
             {lang === "es" ? 
-              "Disponible para roles de liderazgo en Gestión de Calidad, Ingeniería de Procesos y HSEQ / SST en sectores de manufactura compleja, tecnología u operaciones industriales generales (presencial o remoto)." : 
-              "Open to Senior Roles in Quality Management, Process Engineering, and Integrated Systems HSEQ across complex manufacturing, technology, or industrial operations (on-site or remote)."}
+              "Disponible para roles de liderazgo en Gestión de Calidad, Ingeniería de Procesos y HSEQ / SST en sectores de manufactura compleja, tecnología u operaciones industriales generales (presencial o remoto) con disponibilidad para relocalización nacional e internacional." : 
+             lang === "pt" ?
+              "Disponível para cargos de liderança em Gestão de Qualidade, Engenharia de Processos e HSEQ / SST em setores de manufatura complexa, tecnologia ou operações industriais em geral (presencial ou remoto) com total disponibilidade para relocação nacional, internacional e especialmente no Brasil." :
+              "Open to Senior Roles in Quality Management, Process Engineering, and Integrated Systems HSEQ across complex manufacturing, technology, or industrial operations (on-site or remote) with relocation availability."}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
@@ -871,7 +958,12 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="bg-cv-ink border-t border-cv-bg2/10 text-cv-ink3 text-center py-6 font-mono text-[10px] sm:text-xs">
-        Guillermo A. Cañete Ferreyra — Quality Management &amp; Process Engineering — Tierra del Fuego, Argentina
+        <div>
+          Guillermo A. Cañete Ferreyra — Quality Management &amp; Process Engineering — Tierra del Fuego, Argentina
+        </div>
+        <div className="mt-1.5 opacity-60">
+          {lang === "es" ? "Última actualización: 6/6/2026" : lang === "pt" ? "Última atualização: 6/6/2026" : "Last update: 6/6/2026"}
+        </div>
       </footer>
 
       {/* ARTICLE READER MODAL */}
@@ -888,10 +980,10 @@ export default function App() {
             <div className="p-6 border-b border-cv-line bg-cv-bg2/15 flex items-start justify-between gap-4">
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-cv-accent block mb-2">
-                  {modalLang === "es" ? activeArticle.category.es : activeArticle.category.en}
+                  {modalLang === "es" ? activeArticle.category.es : modalLang === "pt" ? activeArticle.category.pt : activeArticle.category.en}
                 </span>
                 <h2 className="font-serif text-xl sm:text-2xl text-cv-ink leading-tight">
-                  {modalLang === "es" ? activeArticle.title.es : activeArticle.title.en}
+                  {modalLang === "es" ? activeArticle.title.es : modalLang === "pt" ? activeArticle.title.pt : activeArticle.title.en}
                 </h2>
               </div>
               <button 
@@ -907,22 +999,31 @@ export default function App() {
             <div className="px-6 py-2.5 bg-cv-bg/80 border-b border-cv-line flex gap-2">
               <button 
                 onClick={() => setModalLang("es")}
-                className={`font-mono text-[10px] px-3 py-1 rounded border cursor-pointer transition-all ${modalLang === "es" ? "bg-cv-accent text-cv-white border-cv-accent" : "border-cv-line text-cv-ink3 hover:text-cv-ink"}`}
+                className={`font-mono text-[10px] px-3 py-1 rounded border cursor-pointer transition-all flex items-center gap-1.5 ${modalLang === "es" ? "bg-cv-accent text-cv-white border-cv-accent" : "border-cv-line text-cv-ink3 hover:text-cv-ink"}`}
               >
-                🇦🇷 Español
+                <FlagAR /> Español
               </button>
               <button 
                 onClick={() => setModalLang("en")}
-                className={`font-mono text-[10px] px-3 py-1 rounded border cursor-pointer transition-all ${modalLang === "en" ? "bg-cv-accent text-cv-white border-cv-accent" : "border-cv-line text-cv-ink3 hover:text-cv-ink"}`}
+                className={`font-mono text-[10px] px-3 py-1 rounded border cursor-pointer transition-all flex items-center gap-1.5 ${modalLang === "en" ? "bg-cv-accent text-cv-white border-cv-accent" : "border-cv-line text-cv-ink3 hover:text-cv-ink"}`}
               >
-                🇺🇸 English
+                <FlagUS /> English
+              </button>
+              <button 
+                onClick={() => setModalLang("pt")}
+                className={`font-mono text-[10px] px-3 py-1 rounded border cursor-pointer transition-all flex items-center gap-1.5 ${modalLang === "pt" ? "bg-cv-accent text-cv-white border-cv-accent" : "border-cv-line text-cv-ink3 hover:text-cv-ink"}`}
+              >
+                <FlagBR /> Português
               </button>
             </div>
 
             {/* Modal Post Body */}
             <div 
               className="p-6 sm:p-8 overflow-y-auto max-h-[60vh] prose prose-sm max-w-none text-cv-ink2 text-xs sm:text-sm space-y-4"
-              dangerouslySetInnerHTML={{ __html: modalLang === "es" ? activeArticle.content.es : activeArticle.content.en }}
+              dangerouslySetInnerHTML={{ 
+                __html: (modalLang === "es" ? activeArticle.content.es : modalLang === "pt" ? activeArticle.content.pt : activeArticle.content.en)
+                  .replace("IMAGE_PLACEHOLDER", activeArticle.id === "spacex" ? spacexPhoto : "")
+              }}
             />
 
             {/* Modal Footer */}
@@ -931,7 +1032,7 @@ export default function App() {
                 onClick={handleCloseArticle}
                 className="px-4 py-2 bg-cv-ink text-cv-bg text-xs font-bold uppercase tracking-wider rounded-sm hover:bg-cv-accent hover:text-cv-white transition-colors cursor-pointer"
               >
-                {lang === "es" ? "Cerrar" : "Close"}
+                {lang === "es" ? "Cerrar" : lang === "pt" ? "Fechar" : "Close"}
               </button>
             </div>
           </div>
@@ -948,7 +1049,7 @@ export default function App() {
           <button 
             onClick={() => setIsPhotoModalOpen(false)}
             className="absolute top-4 right-4 z-[160] p-2.5 bg-cv-black/45 border border-cv-line/30 rounded-full text-white hover:text-cv-accent hover:border-cv-accent hover:scale-110 active:scale-95 transition-all cursor-pointer shadow-lg"
-            title={lang === "es" ? "Cerrar" : "Close"}
+            title={lang === "es" ? "Cerrar" : lang === "pt" ? "Fechar" : "Close"}
           >
             <X className="w-6 h-6" />
           </button>
@@ -972,7 +1073,7 @@ export default function App() {
                 Guillermo Cañete
               </h3>
               <p className="font-mono text-[10px] sm:text-xs text-cv-accent uppercase tracking-wider mt-1">
-                {lang === "es" ? "Gestión de Calidad e Ingeniería de Procesos" : "Quality Management & Process Engineering"}
+                {lang === "es" ? "Gestión de Calidad e Ingeniería de Procesos" : lang === "pt" ? "Gestão de Qualidade e Engenharia de Processos" : "Quality Management & Process Engineering"}
               </p>
             </div>
           </div>
