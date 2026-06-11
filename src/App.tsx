@@ -167,11 +167,16 @@ export default function App() {
     if (browserLang.toLowerCase().startsWith("pt")) return "pt";
     if (browserLang.toLowerCase().startsWith("es")) return "es";
 
-    // 4. Try to detect by timezone
+    // 4. Try to detect by timezone (covering all Brazilian regions)
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
       const lowerTz = tz.toLowerCase();
-      if (lowerTz.includes("sao_paulo") || lowerTz.includes("brazil") || lowerTz.includes("rio_de_janeiro") || lowerTz.includes("recife") || lowerTz.includes("fortaleza") || lowerTz.includes("porto_alegre")) {
+      const brazilTimezones = [
+        "sao_paulo", "brazil", "rio_de_janeiro", "recife", "fortaleza", "porto_alegre",
+        "noronha", "belem", "maceio", "manaus", "campo_grande", "cuiaba", "porto_velho",
+        "boa_vista", "rio_branco", "araguaina", "bahia", "santarem"
+      ];
+      if (brazilTimezones.some(tzName => lowerTz.includes(tzName))) {
         return "pt";
       }
     } catch (e) {}
