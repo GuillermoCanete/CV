@@ -48,6 +48,7 @@ export interface CertItem {
   icon: string;
   name: MultilingualText;
   org: MultilingualText;
+  link?: string;
 }
 
 export interface Article {
@@ -209,9 +210,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Maio de 2025 – Presente · Tempo integral · Presencial" 
     },
     role: { 
-      es: "Gestión de calidad", 
-      en: "Quality Management", 
-      pt: "Gestão de qualidade" 
+      es: "Líder de Gestión de Calidad y Mejora Continua", 
+      en: "Quality Management & Continuous Improvement Lead", 
+      pt: "Líder de Gestão de Qualidade e Melhoria Contínua" 
     },
     desc: {
       es: "Como parte del equipo de Gestión de Calidad, soy responsable de impulsar la mejora continua mediante la toma de decisiones basada en datos y el análisis de la causa raíz. Mis principales responsabilidades incluyen:<br/>● Realizar un <strong>ANÁLISIS DE DATOS</strong> detallado para identificar tendencias y problemas clave de calidad.<br/>● Realizar <strong>ANÁLISIS DE FALLAS</strong> para descubrir las causas raíz y prevenir su recurrencia.<br/>● Diseñar e implementar <strong>ACCIONES CORRECTIVAS Y PREVENTIVAS (CAPA)</strong>.<br/>● Liderar la <strong>VERIFICACIÓN Y VALIDACIÓN</strong> de las soluciones implementadas para garantizar su eficacia.<br/>● Colaborar con equipos multifuncionales para mejorar los procesos y la fiabilidad de la producción.",
@@ -229,9 +230,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Outubro de 2022 – Presente (Função parcial / paralela)" 
     },
     role: { 
-      es: "Auditor ISO 9001, 14001 y 45001", 
-      en: "ISO 9001, 14001 & 45001 Auditor", 
-      pt: "Auditor ISO 9001, 14001 e 45001" 
+      es: "Auditor Líder Integrado (ISO 9001 / 14001 / 45001)", 
+      en: "Lead Integrated ISO Auditor (9001 / 14001 / 45001)", 
+      pt: "Auditor Líder Integrado (ISO 9001 / 14001 / 45001)" 
     },
     desc: {
       es: "Realización de auditorías integradas según el plan anual, verificando la conformidad de los sistemas de gestión en paralelo a mis funciones principales. Mis responsabilidades clave incluyen:<br/>● Asegurar la <strong>CONFORMIDAD CON REQUISITOS</strong> y expectativas del cliente bajo la norma <strong>ISO 9001</strong>.<br/>● Evaluar la <strong>GESTIÓN AMBIENTAL</strong> y el cumplimiento regulatorio estricto bajo la norma <strong>ISO 14001</strong>.<br/>● Auditar condiciones de <strong>SALUD Y SEGURIDAD OCUPACIONAL</strong> y prevención de riesgos bajo <strong>ISO 45001</strong>.<br/>● Realizar la <strong>IDENTIFICACIÓN DE NO CONFORMIDADES</strong> y confección de informes de auditoría detallados.",
@@ -248,9 +249,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Agosto de 2019 – Fevereiro de 2024" 
     },
     role: { 
-      es: "Ingeniería de Procesos", 
-      en: "Process Engineering", 
-      pt: "Engenharia de Processos" 
+      es: "Ingeniero de Procesos Senior", 
+      en: "Senior Process Engineer", 
+      pt: "Engenheiro de Processos Sênior" 
     },
     desc: {
       es: "Diseño y optimización de los procesos de fabricación para las líneas de electrodomésticos, controlando la documentación necesaria para la operación. Responsabilidades clave:<br/>● Diseñar el <strong>FLUJO DE PROCESO</strong> completo y realizar el <strong>BALANCEO DE LÍNEAS</strong> de producción.<br/>● Brindar <strong>CAPACITACIÓN TÉCNICA</strong> al personal operativo sobre estándares de manufactura.<br/>● Realizar <strong>ANÁLISIS DE FALLAS DE PROCESO</strong> y optimización ergonómica de puestos de trabajo.<br/>● Desarrollar <strong>DOCUMENTACIÓN DE MANTENIMIENTO</strong> con instrucciones de trabajo complejas para el mantenimiento anual de equipos críticos.",
@@ -267,9 +268,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Fevereiro de 2017 – Agosto de 2019" 
     },
     role: { 
-      es: "Técnico del Laboratorio de Ingeniería", 
-      en: "Engineering Laboratory Technician", 
-      pt: "Técnico do Laboratório de Engenharia" 
+      es: "Técnico Metrólogo / Laboratorio de Ingeniería", 
+      en: "Metrology & Engineering Laboratory Specialist", 
+      pt: "Técnico Metrologista / Laboratório de Engenharia" 
     },
     desc: {
       es: "Calibración de equipos de medición críticos para la manufactura electrónica, asegurando los más altos estándares de trazabilidad metrológica. Responsabilidades clave:<br/>● Ejecutar calibraciones bajo los lineamientos y principios de la norma <strong>ISO 17025</strong>.<br/>● Asegurar la <strong>TRAZABILIDAD METROLÓGICA</strong> de equipos críticos de planta.<br/>● Calibrar instrumentación de alta complejidad, incluyendo <strong>GENERADORES DE RADIOFRECUENCIA (RF)</strong> y <strong>GENERADORES DE SEÑAL GPS</strong>.<br/>● Calibrar y registrar equipos de medición estándar como <strong>HI-POT TESTERS</strong>, balanzas y multímetros.",
@@ -286,9 +287,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Março de 2014 – Fevereiro de 2017" 
     },
     role: { 
-      es: "Ingeniería de Procesos — Telefonía Móvil", 
-      en: "Process Engineering — Mobile Phones", 
-      pt: "Engenharia de Processos — Telefonia Móvel" 
+      es: "Ingeniero de Procesos — Telefonía Móvil (Marcas Globales)", 
+      en: "Process Engineer — Mobile Business Unit (Global Brands)", 
+      pt: "Engenheiro de Processos — Telefonia Móvel (Marcas Globais)" 
     },
     desc: {
       es: "Diseño del proceso de fabricación de celulares para marcas globales de primer nivel como Motorola, Huawei, ZTE, Alcatel y Sony. La fabricación en esta unidad cesó en febrero de 2017 debido al cierre de la unidad de telefonía móvil. Responsabilidades clave:<br/>● Aplicar metodologías de <strong>PLANIFICACIÓN DE CALIDAD (APQP)</strong> y herramientas <strong>CORE TOOLS</strong> (FMEA, Control Plan).<br/>● Realizar el <strong>BALANCEO DE OPERACIONES</strong> de línea para alcanzar los objetivos de producción y calidad requeridos.<br/>● Disminuir los <strong>COSTOS DE MANUFACTURA</strong> mediante mejoras metodológicas en los procesos de ensamble.<br/>● Confeccionar <strong>INSTRUCCIONES DE TRABAJO</strong> complejas y dar soporte técnico diario en planta.",
@@ -310,9 +311,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Maio de 2012 – Fevereiro de 2014" 
     },
     role: { 
-      es: "INP Calidad (Calidad NPI)", 
-      en: "NPI Quality Analyst", 
-      pt: "Analista de Qualidade NPI" 
+      es: "Analista de Calidad NPI (Nuevos Lanzamientos)", 
+      en: "NPI Quality Analyst (New Product Introduction)", 
+      pt: "Analista de Qualidade NPI (Novos Lançamentos)" 
     },
     desc: {
       es: "Aseguramiento de la calidad en las etapas de Introducción de Nuevos Productos (NPI) y lanzamientos industriales. Responsabilidades clave:<br/>● Auditar actividades de cada lanzamiento para verificar la conformidad con <strong>ISO 9001</strong> e <strong>ISO/TS 16949</strong>.<br/>● Elaborar <strong>PLANES DE CONTROL</strong> e instrucciones de inspección de nuevos componentes.<br/>● Participar activamente en la confección de <strong>FMEAs DE DISEÑO Y PROCESO</strong>.<br/>● Realizar la <strong>TRADUCCIÓN TÉCNICA</strong> de inglés a español de especificaciones corporativas.<br/>● Confeccionar <strong>INFORMES TÉCNICOS DE LANZAMIENTO</strong> para la gerencia y clientes globales.",
@@ -421,29 +422,58 @@ export const CERTS: CertItem[] = [
     } 
   },
   { 
+    icon: "🤖", 
+    name: { 
+      es: "GenAI in Data Analytics (IA Generativa en Análisis de Datos)", 
+      en: "GenAI in Data Analytics", 
+      pt: "GenAI in Data Analytics" 
+    }, 
+    org: { 
+      es: "Meta · Credencial Jun 2026", 
+      en: "Meta · Credential Jun 2026", 
+      pt: "Meta · Credential Jun 2026" 
+    },
+    link: "/CV/certificates/cert_genai_data_analytics.pdf"
+  },
+  { 
+    icon: "👑", 
+    name: { 
+      es: "Autoridad, Dirección y Liderazgo", 
+      en: "Authority, Management & Leadership", 
+      pt: "Autoridade, Direção e Liderança" 
+    }, 
+    org: { 
+      es: "UNAM (Univ. Nacional Autónoma de México) · Credencial Jun 2026", 
+      en: "UNAM (National Autonomous Univ. of Mexico) · Credential Jun 2026", 
+      pt: "UNAM (Univ. Nacional Autónoma de México) · Credential Jun 2026" 
+    },
+    link: "/CV/certificates/cert_liderazgo_unam.pdf"
+  },
+  { 
     icon: "📊", 
     name: { 
-      es: "Análisis de Negocios y Gst. de Procesos", 
-      en: "Business Analysis & Process Mgmt", 
+      es: "Análisis de Negocios y Gestión de Procesos", 
+      en: "Business Analysis & Process Management", 
       pt: "Análise de Negócios e Gestão de Processos" 
     }, 
     org: { 
-      es: "Coursera · BPMN / Lucidchart", 
-      en: "Coursera · BPMN / Lucidchart", 
-      pt: "Coursera · BPMN / Lucidchart" 
-    } 
+      es: "Coursera · BPMN / Lucidchart · Credencial Nov 2025", 
+      en: "Coursera · BPMN / Lucidchart · Credential Nov 2025", 
+      pt: "Coursera · BPMN / Lucidchart · Credencial Nov 2025" 
+    },
+    link: "/CV/certificates/cert_business_analysis.pdf"
   },
   { 
     icon: "🎓", 
     name: { 
-      es: "Experto en Gestión de Proyectos", 
-      en: "Expert in Project Management", 
-      pt: "Especialista em Gestão de Projetos" 
+      es: "Curso y Certificación: Experto en Gestión de Proyectos", 
+      en: "Course & Certification: Project Management Expert", 
+      pt: "Curso e Certificação: Especialista em Gestão de Projetos" 
     }, 
     org: { 
-      es: "UTN FRBA · 2015–2016", 
-      en: "UTN FRBA · 2015–2016", 
-      pt: "UTN FRBA · 2015–2016" 
+      es: "UTN FRBA · Certificación Profesional · 2015–2016", 
+      en: "UTN FRBA · Professional Certification · 2015–2016", 
+      pt: "UTN FRBA · Certificação Profissional · 2015–2016" 
     } 
   }
 ];

@@ -286,14 +286,6 @@ export default function App() {
           </li>
           <li>
             <button 
-              onClick={() => scrollToSection("experience")} 
-              className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
-            >
-              {lang === "es" ? "Experiencia" : lang === "pt" ? "Experiência" : "Experience"}
-            </button>
-          </li>
-          <li>
-            <button 
               onClick={() => scrollToSection("achievements")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
@@ -302,10 +294,26 @@ export default function App() {
           </li>
           <li>
             <button 
+              onClick={() => scrollToSection("experience")} 
+              className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
+            >
+              {lang === "es" ? "Experiencia" : lang === "pt" ? "Experiência" : "Experience"}
+            </button>
+          </li>
+          <li>
+            <button 
               onClick={() => scrollToSection("projects")} 
               className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
             >
               {lang === "es" ? "Proyectos" : lang === "pt" ? "Projetos" : "Projects"}
+            </button>
+          </li>
+          <li>
+            <button 
+              onClick={() => scrollToSection("certs")} 
+              className="text-xs font-bold uppercase tracking-wider text-cv-ink2 hover:text-cv-accent transition-colors cursor-pointer"
+            >
+              {lang === "es" ? "Certificaciones" : lang === "pt" ? "Certificações" : "Certifications"}
             </button>
           </li>
           <li>
@@ -328,6 +336,36 @@ export default function App() {
 
         {/* Localized switch for ES/EN and links */}
         <div className="flex items-center gap-3">
+          <a 
+            href={
+              lang === "es" 
+                ? "/CV/Guillermo_Canete_CV_es.pdf" 
+                : lang === "pt" 
+                  ? "/CV/Guillermo_Canete_CV_pt.pdf" 
+                  : "/CV/Guillermo_Canete_CV_en.pdf"
+            }
+            download={
+              lang === "es" 
+                ? "Guillermo_Canete_CV_es.pdf" 
+                : lang === "pt" 
+                  ? "Guillermo_Canete_CV_pt.pdf" 
+                  : "Guillermo_Canete_CV_en.pdf"
+            }
+            className="flex items-center gap-1.5 border border-cv-line rounded px-2.5 py-1.5 bg-cv-bg2/40 text-xs text-cv-ink hover:bg-cv-accent hover:text-cv-white hover:border-cv-accent transition-all cursor-pointer font-medium"
+            title={
+              lang === "es" 
+                ? "Descargar CV en PDF" 
+                : lang === "pt" 
+                  ? "Baixar CV em PDF" 
+                  : "Download CV in PDF"
+            }
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">
+              {lang === "es" ? "Descargar CV" : lang === "pt" ? "Baixar CV" : "Download CV"}
+            </span>
+          </a>
+
           <div className="flex gap-1.5 border border-cv-line rounded p-1 bg-cv-bg2/40">
             <button 
               onClick={() => handleLangSwitch("es")}
@@ -419,6 +457,33 @@ export default function App() {
             >
               {lang === "es" ? "Hablemos" : lang === "pt" ? "Fale comigo" : "Let's talk"}
             </button>
+            <a 
+              href={
+                lang === "es" 
+                  ? "/CV/Guillermo_Canete_CV_es.pdf" 
+                  : lang === "pt" 
+                    ? "/CV/Guillermo_Canete_CV_pt.pdf" 
+                    : "/CV/Guillermo_Canete_CV_en.pdf"
+              }
+              download={
+                lang === "es" 
+                  ? "Guillermo_Canete_CV_es.pdf" 
+                  : lang === "pt" 
+                    ? "Guillermo_Canete_CV_pt.pdf" 
+                    : "Guillermo_Canete_CV_en.pdf"
+              }
+              className="px-6 py-3 border border-cv-ink text-cv-ink text-xs font-bold tracking-wider uppercase rounded-sm hover:bg-cv-ink hover:text-cv-bg transition-all inline-flex items-center gap-2"
+              title={
+                lang === "es" 
+                  ? "Descargar CV en PDF" 
+                  : lang === "pt" 
+                    ? "Baixar CV em PDF" 
+                    : "Download CV in PDF"
+              }
+            >
+              <Download className="w-4 h-4" />
+              {lang === "es" ? "Descargar CV" : lang === "pt" ? "Baixar CV" : "Download CV"}
+            </a>
             <a 
               href="https://linkedin.com/in/guillermo-canete" 
               target="_blank" 
@@ -817,17 +882,43 @@ export default function App() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CERTS.map((cert, index) => (
-            <div key={index} className="bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300">
-              <div className="text-2xl mb-3">{cert.icon}</div>
-              <h4 className="text-sm font-bold text-cv-ink mb-1">
-                {lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
-              </h4>
-              <p className="font-mono text-[11px] text-cv-ink3 uppercase">
-                {lang === "es" ? cert.org.es : lang === "pt" ? cert.org.pt : cert.org.en}
-              </p>
-            </div>
-          ))}
+          {CERTS.map((cert, index) => {
+            const cardContent = (
+              <>
+                <div className="flex justify-between items-start">
+                  <div className="text-2xl mb-3">{cert.icon}</div>
+                  {cert.link && (
+                    <ExternalLink className="w-3.5 h-3.5 text-cv-ink3 group-hover:text-cv-accent transition-colors" />
+                  )}
+                </div>
+                <h4 className="text-sm font-bold text-cv-ink mb-1 group-hover:text-cv-accent transition-colors">
+                  {lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
+                </h4>
+                <p className="font-mono text-[11px] text-cv-ink3 uppercase">
+                  {lang === "es" ? cert.org.es : lang === "pt" ? cert.org.pt : cert.org.en}
+                </p>
+              </>
+            );
+
+            return cert.link ? (
+              <a 
+                key={index} 
+                href={cert.link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300 block hover:-translate-y-0.5"
+              >
+                {cardContent}
+              </a>
+            ) : (
+              <div 
+                key={index} 
+                className="bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300"
+              >
+                {cardContent}
+              </div>
+            );
+          })}
         </div>
       </section>
 
