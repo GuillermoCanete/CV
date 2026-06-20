@@ -210,9 +210,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Maio de 2025 – Presente · Tempo integral · Presencial" 
     },
     role: { 
-      es: "Líder de Gestión de Calidad y Mejora Continua", 
-      en: "Quality Management & Continuous Improvement Lead", 
-      pt: "Líder de Gestão de Qualidade e Melhoria Contínua" 
+      es: "Gestión de Calidad y Mejora Continua", 
+      en: "Quality Management & Continuous Improvement", 
+      pt: "Gestão de Qualidade e Melhoria Contínua" 
     },
     desc: {
       es: "Como parte del equipo de Gestión de Calidad, soy responsable de impulsar la mejora continua mediante la toma de decisiones basada en datos y el análisis de la causa raíz. Mis principales responsabilidades incluyen:<br/>● Realizar un <strong>ANÁLISIS DE DATOS</strong> detallado para identificar tendencias y problemas clave de calidad.<br/>● Realizar <strong>ANÁLISIS DE FALLAS</strong> para descubrir las causas raíz y prevenir su recurrencia.<br/>● Diseñar e implementar <strong>ACCIONES CORRECTIVAS Y PREVENTIVAS (CAPA)</strong>.<br/>● Liderar la <strong>VERIFICACIÓN Y VALIDACIÓN</strong> de las soluciones implementadas para garantizar su eficacia.<br/>● Colaborar con equipos multifuncionales para mejorar los procesos y la fiabilidad de la producción.",
@@ -230,9 +230,9 @@ export const EXPERIENCES: ExperienceItem[] = [
       pt: "Outubro de 2022 – Presente (Função parcial / paralela)" 
     },
     role: { 
-      es: "Auditor Líder Integrado (ISO 9001 / 14001 / 45001)", 
-      en: "Lead Integrated ISO Auditor (9001 / 14001 / 45001)", 
-      pt: "Auditor Líder Integrado (ISO 9001 / 14001 / 45001)" 
+      es: "Auditor Integrado (ISO 9001 / 14001 / 45001)", 
+      en: "Integrated ISO Auditor (9001 / 14001 / 45001)", 
+      pt: "Auditor Integrado (ISO 9001 / 14001 / 45001)" 
     },
     desc: {
       es: "Realización de auditorías integradas según el plan anual, verificando la conformidad de los sistemas de gestión en paralelo a mis funciones principales. Mis responsabilidades clave incluyen:<br/>● Asegurar la <strong>CONFORMIDAD CON REQUISITOS</strong> y expectativas del cliente bajo la norma <strong>ISO 9001</strong>.<br/>● Evaluar la <strong>GESTIÓN AMBIENTAL</strong> y el cumplimiento regulatorio estricto bajo la norma <strong>ISO 14001</strong>.<br/>● Auditar condiciones de <strong>SALUD Y SEGURIDAD OCUPACIONAL</strong> y prevención de riesgos bajo <strong>ISO 45001</strong>.<br/>● Realizar la <strong>IDENTIFICACIÓN DE NO CONFORMIDADES</strong> y confección de informes de auditoría detallados.",
