@@ -49,7 +49,7 @@ function cleanHtmlDescription(desc: string): string {
   // Convert standard <br/>● into bullet lists cleanly or keep as clean html
   let html = desc.replace(/<br\s*\/?>●/g, '</li><li>');
   if (html.includes('<li>')) {
-    html = '<ul style="margin: 4px 0 0 0; padding-left: 15px; font-size: 9.5pt;"><li>' + html.substring(html.indexOf('<li>') + 4) + '</li></ul>';
+    html = '<ul style="margin: 4px 0 0 0; padding-left: 15px; font-size: 9.2pt;"><li>' + html.substring(html.indexOf('<li>') + 4) + '</li></ul>';
     // Remove duplicate starting/ending points if any
     html = html.replace(/<br\s*\/?>/g, '');
   }
@@ -104,7 +104,7 @@ async function run() {
       return `
         <div class="cert-item">
           <strong>${c.icon} ${name}</strong><br/>
-          <span style="font-size: 8.5pt; color: #666;">${org}</span>
+          <span style="font-size: 8.3pt; color: #666;">${org}</span>
         </div>
       `;
     }).join('\n');
@@ -123,15 +123,15 @@ async function run() {
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: #2c2924;
-      line-height: 1.4;
+      line-height: 1.38;
       margin: 0;
       padding: 0;
-      font-size: 9.8pt;
+      font-size: 9.4pt;
     }
     .header {
       border-bottom: 2px solid #c84b1a;
       padding-bottom: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .header-top {
       display: flex;
@@ -140,21 +140,21 @@ async function run() {
     }
     .header h1 {
       margin: 0;
-      font-size: 22pt;
+      font-size: 21pt;
       font-weight: 700;
       color: #1a1814;
       letter-spacing: -0.5px;
     }
     .header h2 {
       margin: 3px 0 6px 0;
-      font-size: 11pt;
+      font-size: 10.5pt;
       font-weight: 600;
       color: #c84b1a;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .contact-info {
-      font-size: 8.8pt;
+      font-size: 8.5pt;
       color: #555;
       margin-top: 2px;
     }
@@ -166,31 +166,31 @@ async function run() {
       text-decoration: none;
     }
     .section-title {
-      font-size: 11pt;
+      font-size: 10.5pt;
       font-weight: 700;
       text-transform: uppercase;
       color: #1a1814;
       border-bottom: 1.5px solid #c84b1a;
       padding-bottom: 2px;
-      margin-top: 18px;
-      margin-bottom: 8px;
+      margin-top: 15px;
+      margin-bottom: 6px;
       letter-spacing: 0.3px;
     }
     .profile-desc {
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
       text-align: justify;
       color: #4a4640;
-      font-size: 9.8pt;
+      font-size: 9.4pt;
     }
     .skills-list {
       display: grid;
-      grid-template-cols: repeat(4, 1fr);
-      gap: 6px;
+      grid-template-cols: 1fr 1fr;
+      gap: 4px 12px;
     }
     .skill-item {
-      font-size: 8.8pt;
+      font-size: 8.5pt;
       background: #fdfcf8;
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: 2px;
       border: 1px solid #d0ccc4;
       text-align: center;
@@ -199,14 +199,14 @@ async function run() {
     .achievements-list {
       display: grid;
       grid-template-cols: 1fr 1fr;
-      gap: 8px 16px;
+      gap: 6px 16px;
     }
     .achievement-item {
-      font-size: 9.8pt;
+      font-size: 9.4pt;
       color: #4a4640;
     }
     .experience-item {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       page-break-inside: avoid;
     }
     .exp-header {
@@ -215,18 +215,18 @@ async function run() {
       align-items: baseline;
     }
     .exp-title {
-      font-size: 10.5pt;
+      font-size: 10pt;
       font-weight: 700;
       color: #1a1814;
     }
     .exp-company {
-      font-size: 10pt;
+      font-size: 9.3pt;
       font-weight: 600;
       color: #c84b1a;
       margin-bottom: 2px;
     }
     .exp-date {
-      font-size: 9pt;
+      font-size: 8.5pt;
       color: #666;
       font-weight: 500;
     }
@@ -235,15 +235,15 @@ async function run() {
       margin-bottom: 0;
     }
     .exp-desc-container li {
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .certs-grid {
       display: grid;
       grid-template-cols: 1fr 1fr;
-      gap: 6px 16px;
+      gap: 4px 16px;
     }
     .cert-item {
-      font-size: 9pt;
+      font-size: 8.8pt;
       color: #4a4640;
     }
   </style>
