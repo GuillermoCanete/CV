@@ -431,21 +431,21 @@ export default function App() {
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Profesional en <strong>Excelencia Operacional e Ingeniería de Procesos</strong> con 14+ años identificando lo que otros aceptaron como inevitable y convirtiéndolo en resultados medibles. Experiencia probada en manufactura electrónica de alta exigencia para <strong>Motorola, Samsung, Huawei, Sony y Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Diseña procesos, implementa mejora continua y construye herramientas digitales propias aplicando IA. Disponible para relocalización nacional e internacional.
+                Profesional en <strong>Excelencia Operacional e Ingeniería de Procesos</strong> con 14+ años identificando lo que otros aceptaron como inevitable y convirtiéndolo en resultados medibles. Experiencia probada en manufactura electrónica de alta exigencia para <strong>Motorola, Samsung, Huawei, Sony y Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Diseño procesos, implemento mejora continua y construyo herramientas digitales propias aplicando IA. Estoy disponible para relocalización nacional e internacional.
               </>
             ) : lang === "pt" ? (
               <>
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Profissional em <strong>Excelência Operacional e Engenharia de Processos</strong> com 14+ anos identificando o que outros aceitaram como inevitável e convertendo-o em resultados mensuráveis. Experiência comprovada em manufatura eletrônica de alta exigência para <strong>Motorola, Samsung, Huawei, Sony e Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Projeta processos, implementa melhoria contínua e constrói ferramentas digitais próprias aplicando IA. Disponível para relocação nacional e internacional.
+                Profissional em <strong>Excelência Operacional e Engenharia de Processos</strong> com 14+ anos identificando o que outros aceitaram como inevitável e convertendo-o em resultados mensuráveis. Experiência comprovada em manufatura eletrônica de alta exigência para <strong>Motorola, Samsung, Huawei, Sony e Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Projeto processos, implemento melhoria contínua e construo ferramentas digitais próprias aplicando IA. Estou disponível para relocação nacional e internacional.
               </>
             ) : (
               <>
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Professional in <strong>Operational Excellence &amp; Process Engineering</strong> with over 14 years identifying what others accepted as inevitable and turning it into measurable results. Proven experience in high-demand electronics manufacturing for <strong>Motorola, Samsung, Huawei, Sony, and Alcatel</strong>. Certified Auditor for <strong>ISO 9001 · 14001 · 45001</strong>. Designs processes, implements continuous improvement, and builds proprietary digital tools applying AI. Available for national and international relocation.
+                Professional in <strong>Operational Excellence &amp; Process Engineering</strong> with over 14 years identifying what others accepted as inevitable and turning it into measurable results. Proven experience in high-demand electronics manufacturing for <strong>Motorola, Samsung, Huawei, Sony, and Alcatel</strong>. Certified Auditor for <strong>ISO 9001 · 14001 · 45001</strong>. I design processes, implement continuous improvement, and build proprietary digital tools applying AI. I am available for national and international relocation.
               </>
             )}
           </p>
