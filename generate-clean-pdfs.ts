@@ -12,7 +12,7 @@ const translations = {
     contact: "Contacto",
     location: "Tierra del Fuego, Argentina",
     summaryTitle: "Perfil Profesional",
-    summary: "Profesional en Excelencia Operacional e Ingeniería de Procesos con 14+ años de trayectoria en manufactura compleja y alta tecnología, convirtiendo problemas operativos en resultados medibles para marcas globales como Motorola, Samsung, Huawei, Sony y Alcatel. Auditor certificado ISO 9001 · 14001 · 45001. Diseño procesos, implemento mejora continua y construyo herramientas digitales propias aplicando IA. Estoy disponible para relocalización nacional e internacional.",
+    summary: "Profesional en Excelencia Operacional e Ingeniería de Procesos con 14+ años de trayectoria en manufactura compleja (Motorola, Samsung, Huawei, Sony, Alcatel). Auditor certificado ISO 9001 · 14001 · 45001. Gestiono la calidad creando puentes activos entre Calidad, Ingeniería y Producción para resolver problemas desde una perspectiva holística. Agilizo la comunicación en equipos multidisciplinarios para disminuir costos, aumentar la producción y elevar la calidad de forma natural. Construyo mis propias herramientas digitales aplicando IA y estoy disponible para relocalización.",
     skillsTitle: "Habilidades Clave",
     achievementsTitle: "Logros y Resultados Destacados",
     experienceTitle: "Experiencia Profesional",
@@ -24,7 +24,7 @@ const translations = {
     contact: "Contact Information",
     location: "Tierra del Fuego, Argentina",
     summaryTitle: "Professional Profile",
-    summary: "Professional in Operational Excellence & Process Engineering with over 14 years of experience in complex manufacturing and high-tech industries, converting operational issues into measurable results for global brands like Motorola, Samsung, Huawei, Sony, and Alcatel. Certified Auditor for ISO 9001 · 14001 · 45001. I design processes, implement continuous improvement, and build custom digital tools leveraging AI. I am available for national and international relocation.",
+    summary: "Operational Excellence & Process Engineering Professional with over 14 years in complex manufacturing (Motorola, Samsung, Huawei, Sony, Alcatel). Certified ISO 9001 · 14001 · 45001 Auditor. I manage quality by building active bridges between Quality, Engineering, and Production to solve problems holistically. I streamline communication in cross-functional teams to lower costs, increase output, and naturally elevate quality. I build proprietary digital tools leveraging AI and am open to relocation.",
     skillsTitle: "Core Competencies",
     achievementsTitle: "Key Achievements & Metrics",
     experienceTitle: "Professional Experience",
@@ -36,7 +36,7 @@ const translations = {
     contact: "Informações de Contato",
     location: "Tierra del Fuego, Argentina",
     summaryTitle: "Perfil Profissional",
-    summary: "Profissional em Excelência Operacional e Engenharia de Processos com 14+ anos de trajetória em manufatura complexa e alta tecnologia, convertendo problemas operacionais em resultados mensuráveis para marcas globais como Motorola, Samsung, Huawei, Sony e Alcatel. Auditor certificado ISO 9001 · 14001 · 45001. Projeto processos, implemento melhoria contínua e construo ferramentas digitais próprias aplicando IA. Estou disponível para relocação nacional e internacional.",
+    summary: "Profissional em Excelência Operacional e Engenharia de Processos com 14+ anos em manufatura complexa (Motorola, Samsung, Huawei, Sony, Alcatel). Auditor ISO 9001 · 14001 · 45001. Gerencio a qualidade construindo pontes ativas entre Qualidade, Engenharia e Produção para resolver problemas de forma holística. Agilizo a comunicação em equipes multidisciplinares para reduzir custos, aumentar a produção e elevar a qualidade naturalmente. Desenvolvo minhas próprias ferramentas digitais aplicando IA e estou disponível para relocação.",
     skillsTitle: "Habilidades Principais",
     achievementsTitle: "Resultados e Métricas de Impacto",
     experienceTitle: "Experiência Profissional",
@@ -70,8 +70,15 @@ async function run() {
     const trans = translations[lang];
 
     // Filter skills (only name)
-    const skillsHtml = SKILLS.map(s => {
-      return `<div class="skill-item">${s.name}</div>`;
+    const skillsHtml = SKILLS.filter(s => s.id !== "s7" || lang === 'pt').map(s => {
+      const name = s.id === "s5" ? (
+        lang === "es" ? "IA Aplicada a Calidad" : lang === "pt" ? "IA Aplicada à Qualidade" : "AI Applied to Quality"
+      ) : s.id === "s6" ? (
+        lang === "es" ? "Inglés — Profesional - B2" : lang === "pt" ? "Inglês — Profissional - B2" : "English — Professional - B2"
+      ) : s.id === "s7" ? (
+        lang === "pt" ? "Português — Inicial" : s.name
+      ) : s.name;
+      return `<div class="skill-item">${name}</div>`;
     }).join('\n');
 
     // Filter achievements

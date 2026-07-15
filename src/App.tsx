@@ -431,21 +431,21 @@ export default function App() {
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Profesional en <strong>Excelencia Operacional e Ingeniería de Procesos</strong> con 14+ años identificando lo que otros aceptaron como inevitable y convirtiéndolo en resultados medibles. Experiencia probada en manufactura electrónica de alta exigencia para <strong>Motorola, Samsung, Huawei, Sony y Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Diseño procesos, implemento mejora continua y construyo herramientas digitales propias aplicando IA. Estoy disponible para relocalización nacional e internacional.
+                Profesional en <strong>Excelencia Operacional e Ingeniería de Procesos</strong> con 14+ años de trayectoria en manufactura compleja (Motorola, Samsung, Huawei, Sony, Alcatel). Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Gestiono la calidad creando puentes activos entre Calidad, Ingeniería y Producción para resolver problemas desde una perspectiva holística. Agilizo la comunicación en equipos multidisciplinarios para disminuir costos, aumentar la producción y elevar la calidad de forma natural. Construyo mis propias herramientas digitales aplicando IA y estoy disponible para relocalización.
               </>
             ) : lang === "pt" ? (
               <>
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Profissional em <strong>Excelência Operacional e Engenharia de Processos</strong> com 14+ anos identificando o que outros aceitaram como inevitável e convertendo-o em resultados mensuráveis. Experiência comprovada em manufatura eletrônica de alta exigência para <strong>Motorola, Samsung, Huawei, Sony e Alcatel</strong>. Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Projeto processos, implemento melhoria contínua e construo ferramentas digitais próprias aplicando IA. Estou disponível para relocação nacional e internacional.
+                Profissional em <strong>Excelência Operacional e Engenharia de Processos</strong> com 14+ anos em manufatura complexa (Motorola, Samsung, Huawei, Sony, Alcatel). Auditor certificado <strong>ISO 9001 · 14001 · 45001</strong>. Gerencio a qualidade construindo pontes ativas entre Qualidade, Engenharia e Produção para resolver problemas de forma holística. Agilizo a comunicação em equipes multidisciplinares para reduzir custos, aumentar a produção e elevar a qualidade naturalmente. Desenvolvo minhas próprias ferramentas digitais aplicando IA e estou disponível para relocação.
               </>
             ) : (
               <>
                 <span className="block font-mono text-xs sm:text-sm text-cv-accent font-bold uppercase tracking-wider mb-4">
                   Operational Excellence &amp; Process Engineering | AI-Enhanced Manufacturing Systems
                 </span>
-                Professional in <strong>Operational Excellence &amp; Process Engineering</strong> with over 14 years identifying what others accepted as inevitable and turning it into measurable results. Proven experience in high-demand electronics manufacturing for <strong>Motorola, Samsung, Huawei, Sony, and Alcatel</strong>. Certified Auditor for <strong>ISO 9001 · 14001 · 45001</strong>. I design processes, implement continuous improvement, and build proprietary digital tools applying AI. I am available for national and international relocation.
+                Professional in <strong>Operational Excellence &amp; Process Engineering</strong> with over 14 years in complex manufacturing (Motorola, Samsung, Huawei, Sony, Alcatel). Certified Auditor for <strong>ISO 9001 · 14001 · 45001</strong>. I manage quality by building active bridges between Quality, Engineering, and Production to solve problems holistically. I streamline communication in cross-functional teams to lower costs, increase output, and naturally elevate quality. I build proprietary digital tools leveraging AI and am open to relocation.
               </>
             )}
           </p>
@@ -564,11 +564,19 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
-            {SKILLS.map((skill) => (
+            {SKILLS.filter(skill => skill.id !== "s7" || lang === "pt").map((skill) => (
               <div key={skill.id} className="bg-cv-white border border-cv-line p-4 rounded flex items-center justify-between shadow-sm hover:border-cv-accent transition-all duration-200 hover:-translate-y-0.5">
-                <span className="text-xs sm:text-sm font-semibold text-cv-ink">{skill.name}</span>
+                <span className="text-xs sm:text-sm font-semibold text-cv-ink">
+                  {skill.id === "s5" ? (
+                    lang === "es" ? "IA Aplicada a Calidad" : lang === "pt" ? "IA Aplicada à Qualidade" : "AI Applied to Quality"
+                  ) : skill.id === "s6" ? (
+                    lang === "es" ? "Inglés — Profesional - B2" : lang === "pt" ? "Inglês — Profissional - B2" : "English — Professional - B2"
+                  ) : skill.id === "s7" ? (
+                    lang === "pt" ? "Português — Inicial" : skill.name
+                  ) : skill.name}
+                </span>
                 <span className="font-mono text-[10px] bg-cv-accent2/50 text-cv-accent px-2 py-0.5 rounded uppercase font-medium">
-                  {skill.id === "s7" && lang !== "pt" ? (lang === "es" ? "Inicial" : "Beginner") : (lang === "es" ? skill.tag.es : lang === "pt" ? skill.tag.pt : skill.tag.en)}
+                  {lang === "es" ? skill.tag.es : lang === "pt" ? skill.tag.pt : skill.tag.en}
                 </span>
               </div>
             ))}
