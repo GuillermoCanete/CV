@@ -416,7 +416,7 @@ export default function App() {
 
             <div className="flex-1">
               <span className="inline-block font-mono text-[10px] sm:text-xs tracking-widest uppercase text-cv-accent border border-cv-accent px-2.5 py-1 rounded mb-3">
-                {lang === "es" ? "Abierto a nuevas oportunidades · Disponible para relocalización" : lang === "pt" ? "Aberto a novas oportunidades · Disponível para relocação" : "Open to new opportunities · Available for relocation"}
+                {lang === "es" ? "Disponible para relocalización" : lang === "pt" ? "Disponível para relocação" : "Available for relocation"}
               </span>
               <h1 className="font-serif text-4xl sm:text-6xl tracking-tight leading-none text-cv-ink">
                 Guillermo <br />
