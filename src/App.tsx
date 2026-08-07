@@ -416,7 +416,7 @@ export default function App() {
 
             <div className="flex-1">
               <span className="inline-block font-mono text-[10px] sm:text-xs tracking-widest uppercase text-cv-accent border border-cv-accent px-2.5 py-1 rounded mb-3">
-                {lang === "es" ? "Abierto a nuevas oportunidades" : lang === "pt" ? "Aberto a novas oportunidades" : "Open to new opportunities"}
+                {lang === "es" ? "Abierto a nuevas oportunidades · Disponible para relocalización" : lang === "pt" ? "Aberto a novas oportunidades · Disponível para relocação" : "Open to new opportunities · Available for relocation"}
               </span>
               <h1 className="font-serif text-4xl sm:text-6xl tracking-tight leading-none text-cv-ink">
                 Guillermo <br />
@@ -1024,10 +1024,10 @@ export default function App() {
           
           <p className="text-sm sm:text-base text-cv-bg2/80 max-w-xl mx-auto mb-12 leading-relaxed">
             {lang === "es" ? 
-              "Disponible para roles de liderazgo en Gestión de Calidad, Ingeniería de Procesos y HSEQ / SST en sectores de manufactura compleja, tecnología u operaciones industriales generales (presencial o remoto) con disponibilidad para relocalización nacional e internacional." : 
+              "Disponible para roles de liderazgo en Excelencia Operacional, Gestión de Calidad e Ingeniería de Procesos en sectores de manufactura compleja, tecnología u operaciones industriales generales (presencial o remoto) con disponibilidad para relocalización nacional e internacional." : 
              lang === "pt" ?
-              "Disponível para cargos de liderança em Gestão de Qualidade, Engenharia de Processos e HSEQ / SST em setores de manufatura complexa, tecnologia ou operações industriais em geral (presencial ou remoto) com total disponibilidade para relocação nacional, internacional e especialmente no Brasil." :
-              "Open to Senior Roles in Quality Management, Process Engineering, and Integrated Systems HSEQ across complex manufacturing, technology, or industrial operations (on-site or remote) with relocation availability."}
+              "Disponível para cargos de liderança em Excelência Operacional, Gestão de Qualidade e Engenharia de Processos em setores de manufatura complexa, tecnologia ou operações industriais em geral (presencial ou remoto) com total disponibilidade para relocação nacional e internacional." :
+              "Open to Senior Roles in Operational Excellence, Quality Management, and Process Engineering across complex manufacturing, technology, or industrial operations (on-site or remote) with relocation availability."}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
