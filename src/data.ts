@@ -129,7 +129,7 @@ export const SKILLS: SkillItem[] = [
   },
   { 
     id: "s6", 
-    name: "Inglés — Profesional - B2", 
+    name: "Inglés — Avanzado", 
     tag: { es: "Avanzado", en: "Advanced", pt: "Avançado" } 
   },
   { 

@@ -570,7 +570,7 @@ export default function App() {
                   {skill.id === "s5" ? (
                     lang === "es" ? "IA Aplicada a Calidad" : lang === "pt" ? "IA Aplicada à Qualidade" : "AI Applied to Quality"
                   ) : skill.id === "s6" ? (
-                    lang === "es" ? "Inglés — Profesional - B2" : lang === "pt" ? "Inglês — Profissional - B2" : "English — Professional - B2"
+                    lang === "es" ? "Inglés — Avanzado" : lang === "pt" ? "Inglês — Avançado" : "English — Advanced"
                   ) : skill.id === "s7" ? (
                     lang === "pt" ? "Português — Inicial" : skill.name
                   ) : skill.name}

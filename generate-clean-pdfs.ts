@@ -74,7 +74,7 @@ async function run() {
       const name = s.id === "s5" ? (
         lang === "es" ? "IA Aplicada a Calidad" : lang === "pt" ? "IA Aplicada à Qualidade" : "AI Applied to Quality"
       ) : s.id === "s6" ? (
-        lang === "es" ? "Inglés — Profesional - B2" : lang === "pt" ? "Inglês — Profissional - B2" : "English — Professional - B2"
+        lang === "es" ? "Inglés — Avanzado" : lang === "pt" ? "Inglês — Avançado" : "English — Advanced"
       ) : s.id === "s7" ? (
         lang === "pt" ? "Português — Inicial" : s.name
       ) : s.name;
