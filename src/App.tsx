@@ -189,6 +189,7 @@ export default function App() {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [modalLang, setModalLang] = useState<"es" | "en" | "pt">("es");
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
+  const [certModalImage, setCertModalImage] = useState<string | null>(null);
 
   // PCB Defect Recorder Simulator States
   const [simulatedDefects, setSimulatedDefects] = useState<Array<{ id: number; x: number; y: number; type: string }>>([
@@ -214,6 +215,7 @@ export default function App() {
       if (e.key === "Escape") {
         setIsPhotoModalOpen(false);
         setActiveArticle(null);
+        setCertModalImage(null);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -889,41 +891,77 @@ export default function App() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {CERTS.map((cert, index) => {
-            const cardContent = (
-              <>
-                <div className="flex justify-between items-start">
-                  <div className="text-2xl mb-3">{cert.icon}</div>
-                  {cert.link && (
-                    <ExternalLink className="w-3.5 h-3.5 text-cv-ink3 group-hover:text-cv-accent transition-colors" />
-                  )}
+            if (cert.thumbnail) {
+              return (
+                <div 
+                  key={index} 
+                  className="group bg-cv-white border border-cv-line rounded-lg shadow-sm hover:border-cv-accent hover:shadow-md transition-all duration-300 flex overflow-hidden"
+                >
+                  {/* Thumbnail */}
+                  <div 
+                    className="relative w-32 sm:w-40 flex-shrink-0 bg-cv-bg2/5 border-r border-cv-line cursor-pointer overflow-hidden"
+                    onClick={() => setCertModalImage(cert.thumbnail!)}
+                  >
+                    <img 
+                      src={cert.thumbnail} 
+                      alt={lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-cv-black/0 hover:bg-cv-black/10 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
+                      <span className="bg-cv-black/60 text-white text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded">
+                        {lang === "es" ? "Ver" : lang === "pt" ? "Ver" : "View"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 p-5 flex flex-col justify-center min-w-0">
+                    <div className="flex items-start gap-2 mb-1">
+                      <span className="text-lg flex-shrink-0">{cert.icon}</span>
+                      <h4 className="text-sm font-bold text-cv-ink group-hover:text-cv-accent transition-colors leading-tight">
+                        {lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
+                      </h4>
+                    </div>
+                    <p className="font-mono text-[10px] text-cv-ink3 uppercase tracking-wide mb-2 pl-7">
+                      {lang === "es" ? cert.org.es : lang === "pt" ? cert.org.pt : cert.org.en}
+                    </p>
+                    {cert.description && (
+                      <p className="text-xs text-cv-ink2 leading-relaxed pl-7 line-clamp-3">
+                        {lang === "es" ? cert.description.es : lang === "pt" ? cert.description.pt : cert.description.en}
+                      </p>
+                    )}
+                    {cert.link && (
+                      <a 
+                        href={cert.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="inline-flex items-center gap-1.5 mt-2 pl-7 text-[10px] font-mono uppercase tracking-wider text-cv-accent hover:text-cv-ink transition-colors"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        {lang === "es" ? "Ver certificado" : lang === "pt" ? "Ver certificado" : "View certificate"}
+                      </a>
+                    )}
+                  </div>
                 </div>
-                <h4 className="text-sm font-bold text-cv-ink mb-1 group-hover:text-cv-accent transition-colors">
+              );
+            }
+
+            // Fallback for certs without thumbnails (compact card)
+            return (
+              <div 
+                key={index} 
+                className="bg-cv-white border border-cv-line p-6 rounded-lg shadow-sm hover:border-cv-accent transition-all duration-300"
+              >
+                <div className="text-2xl mb-3">{cert.icon}</div>
+                <h4 className="text-sm font-bold text-cv-ink mb-1">
                   {lang === "es" ? cert.name.es : lang === "pt" ? cert.name.pt : cert.name.en}
                 </h4>
                 <p className="font-mono text-[11px] text-cv-ink3 uppercase">
                   {lang === "es" ? cert.org.es : lang === "pt" ? cert.org.pt : cert.org.en}
                 </p>
-              </>
-            );
-
-            return cert.link ? (
-              <a 
-                key={index} 
-                href={cert.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="group bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300 block hover:-translate-y-0.5"
-              >
-                {cardContent}
-              </a>
-            ) : (
-              <div 
-                key={index} 
-                className="bg-cv-white border border-cv-line p-6 rounded shadow-sm hover:border-cv-accent transition-all duration-300"
-              >
-                {cardContent}
               </div>
             );
           })}
@@ -1180,6 +1218,33 @@ export default function App() {
                 {lang === "es" ? "Gestión de Calidad e Ingeniería de Procesos" : lang === "pt" ? "Gestão de Qualidade e Engenharia de Processos" : "Quality Management & Process Engineering"}
               </p>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Certificate Lightbox Modal */}
+      {certModalImage && (
+        <div 
+          className="fixed inset-0 z-[150] bg-cv-black/90 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+          onClick={() => setCertModalImage(null)}
+        >
+          <button 
+            onClick={() => setCertModalImage(null)}
+            className="absolute top-4 right-4 z-[160] p-2.5 bg-cv-black/45 border border-cv-line/30 rounded-full text-white hover:text-cv-accent hover:border-cv-accent hover:scale-110 active:scale-95 transition-all cursor-pointer shadow-lg"
+            title={lang === "es" ? "Cerrar" : lang === "pt" ? "Fechar" : "Close"}
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div 
+            className="relative max-w-full max-h-[85vh] md:max-w-4xl flex flex-col items-center justify-center animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={certModalImage} 
+              alt="Certificate" 
+              className="max-h-[80vh] md:max-h-[85vh] w-auto max-w-full rounded-lg border-2 border-cv-accent2/50 shadow-2xl object-contain bg-cv-white cursor-zoom-out"
+              onClick={() => setCertModalImage(null)}
+            />
           </div>
         </div>
       )}

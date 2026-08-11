@@ -49,6 +49,8 @@ export interface CertItem {
   name: MultilingualText;
   org: MultilingualText;
   link?: string;
+  description?: MultilingualText;
+  thumbnail?: string;
 }
 
 export interface Article {
@@ -377,49 +379,36 @@ export const CERTS: CertItem[] = [
       pt: "Auditor ISO 9001 / 14001 / 45001" 
     }, 
     org: { 
-      es: "Auditor Interno — Activo", 
-      en: "Internal Auditor — Active", 
-      pt: "Auditor Interno — Ativo" 
-    } 
+      es: "BGH S.A. / IGS Consulting · 2022", 
+      en: "BGH S.A. / IGS Consulting · 2022", 
+      pt: "BGH S.A. / IGS Consulting · 2022" 
+    },
+    description: {
+      es: "Formación de Auditor Interno en Normas ISO 9001:2015, 14001:2015 y 45001:2018. Curso de 26 hs. dictado por IGS Consulting en BGH S.A.",
+      en: "Internal Auditor Training in ISO 9001:2015, 14001:2015 & 45001:2018 Standards. 26-hour course delivered by IGS Consulting at BGH S.A.",
+      pt: "Formação de Auditor Interno em Normas ISO 9001:2015, 14001:2015 e 45001:2018. Curso de 26 hs. ministrado pela IGS Consulting na BGH S.A."
+    },
+    thumbnail: "/CV/certificates/thumbs/auditor_iso.jpeg"
   },
   { 
-    icon: "🤖", 
+    icon: "📊", 
     name: { 
-      es: "Claude 101 — Uso Profesional con IA", 
-      en: "Claude 101 — AI Professional Use", 
-      pt: "Claude 101 — Uso Profissional com IA" 
+      es: "Análisis de Negocios y Gestión de Procesos", 
+      en: "Business Analysis & Process Management", 
+      pt: "Análise de Negócios e Gestão de Processos" 
     }, 
     org: { 
-      es: "Anthropic Education · Abr 2026", 
-      en: "Anthropic Education · Apr 2026", 
-      pt: "Anthropic Education · Abr 2026" 
-    } 
-  },
-  { 
-    icon: "⚡", 
-    name: { 
-      es: "Claude Code 101", 
-      en: "Claude Code 101", 
-      pt: "Claude Code 101" 
-    }, 
-    org: { 
-      es: "Anthropic Education · 2026", 
-      en: "Anthropic Education · 2026", 
-      pt: "Anthropic Education · 2026" 
-    } 
-  },
-  { 
-    icon: "🧠", 
-    name: { 
-      es: "Marco de Competencia y Fundamentos de IA", 
-      en: "AI Fluency Framework & Foundations", 
-      pt: "Estrutura de Competência e Fundamentos de IA" 
-    }, 
-    org: { 
-      es: "Anthropic · Certificado de Finalización", 
-      en: "Anthropic · Certificate of Completion", 
-      pt: "Anthropic · Certificado de Conclusão" 
-    } 
+      es: "Coursera · BPMN / Lucidchart · Nov 2025", 
+      en: "Coursera · BPMN / Lucidchart · Nov 2025", 
+      pt: "Coursera · BPMN / Lucidchart · Nov 2025" 
+    },
+    description: {
+      es: "Analizar procesos de negocio y encontrar soluciones a problemas existentes. Definir procesos, sus objetivos y cómo fluyen dentro del contexto organizacional. Evaluar el negocio desde una vista de procesos y encontrar soluciones aplicables.",
+      en: "Analyze business processes and find solutions to existing problems. Define processes, their objectives and how they flow within the organizational context. Evaluate the business from a process view and find applicable solutions.",
+      pt: "Analisar processos de negócio e encontrar soluções para problemas existentes. Definir processos, seus objetivos e como fluem dentro do contexto organizacional. Avaliar o negócio desde uma visão de processos e encontrar soluções aplicáveis."
+    },
+    link: "/CV/certificates/cert_business_analysis.pdf",
+    thumbnail: "/CV/certificates/thumbs/business_analysis.png"
   },
   { 
     icon: "🤖", 
@@ -433,7 +422,13 @@ export const CERTS: CertItem[] = [
       en: "Meta · Credential Jun 2026", 
       pt: "Meta · Credential Jun 2026" 
     },
-    link: "/CV/certificates/cert_genai_data_analytics.pdf"
+    description: {
+      es: "Qué es la IA generativa y sus implicaciones en el contexto de análisis de datos. Estrategias básicas para incorporar herramientas de IA generativa en tareas de análisis de datos.",
+      en: "What generative AI is and its implication in the data analytics context. Basic strategies for incorporating generative AI tools in data analytics tasks.",
+      pt: "O que é a IA generativa e suas implicações no contexto de análise de dados. Estratégias básicas para incorporar ferramentas de IA generativa em tarefas de análise de dados."
+    },
+    link: "/CV/certificates/cert_genai_data_analytics.pdf",
+    thumbnail: "/CV/certificates/thumbs/genai_data.png"
   },
   { 
     icon: "👑", 
@@ -443,25 +438,136 @@ export const CERTS: CertItem[] = [
       pt: "Autoridade, Direção e Liderança" 
     }, 
     org: { 
-      es: "UNAM (Univ. Nacional Autónoma de México) · Credencial Jun 2026", 
-      en: "UNAM (National Autonomous Univ. of Mexico) · Credential Jun 2026", 
-      pt: "UNAM (Univ. Nacional Autónoma de México) · Credential Jun 2026" 
+      es: "UNAM · Habilidades Gerenciales · Jun 2026", 
+      en: "UNAM · Managerial Skills · Jun 2026", 
+      pt: "UNAM · Habilidades Gerenciais · Jun 2026" 
     },
-    link: "/CV/certificates/cert_liderazgo_unam.pdf"
+    description: {
+      es: "Parte del Programa Especializado: Habilidades Gerenciales (actualmente en curso). Desarrollo de competencias en autoridad, dirección y liderazgo organizacional.",
+      en: "Part of the Managerial Skills Specialization Program (currently in progress). Development of competencies in authority, management and organizational leadership.",
+      pt: "Parte do Programa Especializado: Habilidades Gerenciais (atualmente em andamento). Desenvolvimento de competências em autoridade, direção e liderança organizacional."
+    },
+    link: "/CV/certificates/cert_liderazgo_unam.pdf",
+    thumbnail: "/CV/certificates/thumbs/liderazgo.png"
   },
   { 
-    icon: "📊", 
+    icon: "🧑‍💼", 
     name: { 
-      es: "Análisis de Negocios y Gestión de Procesos", 
-      en: "Business Analysis & Process Management", 
-      pt: "Análise de Negócios e Gestão de Processos" 
+      es: "Gestión del Talento Humano", 
+      en: "Human Talent Management", 
+      pt: "Gestão de Talento Humano" 
     }, 
     org: { 
-      es: "Coursera · BPMN / Lucidchart · Credencial Nov 2025", 
-      en: "Coursera · BPMN / Lucidchart · Credential Nov 2025", 
-      pt: "Coursera · BPMN / Lucidchart · Credencial Nov 2025" 
+      es: "UNAM · Habilidades Gerenciales · 2026", 
+      en: "UNAM · Managerial Skills · 2026", 
+      pt: "UNAM · Habilidades Gerenciais · 2026" 
     },
-    link: "/CV/certificates/cert_business_analysis.pdf"
+    description: {
+      es: "Parte del Programa Especializado: Habilidades Gerenciales (actualmente en curso). Gestión estratégica del capital humano en organizaciones.",
+      en: "Part of the Managerial Skills Specialization Program (currently in progress). Strategic management of human capital in organizations.",
+      pt: "Parte do Programa Especializado: Habilidades Gerenciais (atualmente em andamento). Gestão estratégica do capital humano em organizações."
+    },
+    link: "/CV/certificates/cert_talento_humano.pdf",
+    thumbnail: "/CV/certificates/thumbs/talento_humano.png"
+  },
+  { 
+    icon: "🚀", 
+    name: { 
+      es: "Agentes de IA Generativa con Vertex AI y Flutter", 
+      en: "Generative AI Agents with Vertex AI & Flutter", 
+      pt: "Agentes de IA Generativa com Vertex AI e Flutter" 
+    }, 
+    org: { 
+      es: "Coursera / Google Cloud · 2026", 
+      en: "Coursera / Google Cloud · 2026", 
+      pt: "Coursera / Google Cloud · 2026" 
+    },
+    description: {
+      es: "Describir la IA generativa y el uso de modelos y herramientas para crear aplicaciones. Implementar funciones basadas en IA generativa en una app de Flutter integrando Gemini y un agente de Reasoning Engine.",
+      en: "Describe generative AI and the use of models and tools to build applications. Implement generative AI features in a Flutter app integrating Gemini and a Reasoning Engine agent.",
+      pt: "Descrever a IA generativa e o uso de modelos e ferramentas para criar aplicações. Implementar funcionalidades baseadas em IA generativa em um aplicativo Flutter integrando Gemini e um agente de Reasoning Engine."
+    },
+    link: "https://www.coursera.org/account/accomplishments/verify/S42LKC9UBWWO",
+    thumbnail: "/CV/certificates/thumbs/vertex_ai_flutter.png"
+  },
+  { 
+    icon: "🤖", 
+    name: { 
+      es: "Claude 101 — Uso Profesional con IA", 
+      en: "Claude 101 — AI Professional Use", 
+      pt: "Claude 101 — Uso Profissional com IA" 
+    }, 
+    org: { 
+      es: "Anthropic Education · Abr 2026", 
+      en: "Anthropic Education · Apr 2026", 
+      pt: "Anthropic Education · Abr 2026" 
+    },
+    description: {
+      es: "Fundamentos del uso profesional de Claude como asistente de IA. Técnicas de prompting, flujos de trabajo y mejores prácticas para maximizar la productividad.",
+      en: "Fundamentals of professional use of Claude as an AI assistant. Prompting techniques, workflows and best practices to maximize productivity.",
+      pt: "Fundamentos do uso profissional do Claude como assistente de IA. Técnicas de prompting, fluxos de trabalho e melhores práticas para maximizar a produtividade."
+    },
+    link: "/CV/certificates/cert_claude_101.pdf",
+    thumbnail: "/CV/certificates/thumbs/claude_101.png"
+  },
+  { 
+    icon: "⚡", 
+    name: { 
+      es: "Claude Code 101", 
+      en: "Claude Code 101", 
+      pt: "Claude Code 101" 
+    }, 
+    org: { 
+      es: "Anthropic Education · 2026", 
+      en: "Anthropic Education · 2026", 
+      pt: "Anthropic Education · 2026" 
+    },
+    description: {
+      es: "Desarrollo asistido por IA con Claude Code. Creación de aplicaciones, debugging y automatización de flujos de desarrollo.",
+      en: "AI-assisted development with Claude Code. Application creation, debugging and development workflow automation.",
+      pt: "Desenvolvimento assistido por IA com Claude Code. Criação de aplicações, debugging e automação de fluxos de desenvolvimento."
+    },
+    link: "/CV/certificates/cert_claude_code_101.pdf",
+    thumbnail: "/CV/certificates/thumbs/claude_code_101.png"
+  },
+  { 
+    icon: "🧠", 
+    name: { 
+      es: "Marco de Competencia y Fundamentos de IA", 
+      en: "AI Fluency Framework & Foundations", 
+      pt: "Estrutura de Competência e Fundamentos de IA" 
+    }, 
+    org: { 
+      es: "Anthropic · Certificado de Finalización", 
+      en: "Anthropic · Certificate of Completion", 
+      pt: "Anthropic · Certificado de Conclusão" 
+    },
+    description: {
+      es: "Marco de competencia en IA y fundamentos para la adopción responsable de inteligencia artificial en contextos profesionales.",
+      en: "AI competency framework and foundations for responsible AI adoption in professional contexts.",
+      pt: "Estrutura de competência em IA e fundamentos para a adoção responsável de inteligência artificial em contextos profissionais."
+    },
+    link: "/CV/certificates/cert_ai_fluency.pdf",
+    thumbnail: "/CV/certificates/thumbs/ai_fluency.png"
+  },
+  { 
+    icon: "🔧", 
+    name: { 
+      es: "APQP con Énfasis en FMEA y Plan de Control", 
+      en: "APQP with Emphasis on FMEA & Control Plan", 
+      pt: "APQP com Ênfase em FMEA e Plano de Controle" 
+    }, 
+    org: { 
+      es: "Shinka Ingeniería · Jul 2012", 
+      en: "Shinka Engineering · Jul 2012", 
+      pt: "Shinka Engenharia · Jul 2012" 
+    },
+    description: {
+      es: "Planificación Anticipada de la Calidad del Producto (APQP) con énfasis en Análisis de Modos y Efectos de Falla (FMEA) y Plan de Control.",
+      en: "Advanced Product Quality Planning (APQP) with emphasis on Failure Mode & Effects Analysis (FMEA) and Control Plan.",
+      pt: "Planejamento Avançado da Qualidade do Produto (APQP) com ênfase em Análise de Modos e Efeitos de Falha (FMEA) e Plano de Controle."
+    },
+    thumbnail: "/CV/certificates/thumbs/apqp.png"
   },
   { 
     icon: "🎓", 
